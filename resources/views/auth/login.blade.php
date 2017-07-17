@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div id="page-wrapper">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -60,6 +60,15 @@
                             </div>
                         </div>
                     </form>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-4">
+                                <a href="{{ url('/login/1/facebook') }}" class="btn btn-block btn-social btn-facebook">
+                                    <i class="fa fa-facebook"></i> Sign in with Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

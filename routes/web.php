@@ -19,6 +19,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('login/facebook', 'FbAuth\LoginController@redirectToProvider');
+Route::get('login/{group_id}/facebook', 'FbAuth\LoginController@redirectToProvider');
 Route::get('login/facebook/callback/{provider?}', 'FbAuth\LoginController@handleProviderCallback');
 Route::get('callback/{provider?}', 'FbAuth\LoginController@handleCallback');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function() {
+	Route::resource('/pages', 'AdminPageController');
+
+});

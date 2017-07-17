@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Socialite;
 use Redirect;
+use App\User;
+use App\Models\FbUser;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -14,9 +17,9 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider($group_id)
     {
-        return Socialite::driver('facebook')->scopes(['user_posts', 'publish_actions', 'user_managed_groups', 'manage_pages', 'publish_pages', 'pages_manage_cta'])->redirect();
+        return Socialite::driver('facebook')->scopes(['user_posts', 'publish_actions', 'user_managed_groups', 'manage_pages', 'publish_pages', 'pages_manage_cta'])->with(['state' => $group_id])->redirect();
     }
 
     /**
@@ -24,10 +27,35 @@ class LoginController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
-        $user = Socialite::driver('facebook')->user();
-        return dd($user);
+        $userAuth = Socialite::driver('facebook')->stateless()->user();
+
+        $group_id = $request->get('state');
+
+        if ($user = User::where('email', $userAuth->email)->first()) {
+            Auth::loginUsingId($user->id);
+            return Redirect::to('/home');
+        }
+
+        $user = new User;
+        $user->name = $userAuth->name;
+        $user->email = $userAuth->email;
+        $user->avatar = $userAuth->avatar;
+        $user->group_id = $group_id;
+        $user->fb_id = $userAuth->id;
+        $user->save();
+
+        if ($group_id == 1) {
+            $fbUser = new FbUser;
+            $fbUser->user_id = $user->id;
+            $fbUser->access_token = $userAuth->token;
+            $fbUser->expires_in = $userAuth->expiresIn;
+
+            $fbUser->save();
+        }
+        Auth::loginUsingId($user->id);
+        return Redirect::to('/home');
 
         return Redirect::to('https://graph.facebook.com/oauth/client_code?access_token='.$user->token.'&client_secret=18aca32d0218e63828e38cafd15fdb94&redirect_uri=http://localhost:8000/callback&client_id=1804782059851995');
 
