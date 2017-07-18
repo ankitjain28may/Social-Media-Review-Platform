@@ -13,7 +13,7 @@ class UserFbActions extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'page_id', 'post_id', 'action', 'details', 'action_perform',
+        'user_id', 'page_id', 'post_id', 'action', 'details', 'action_perform', 'action_id', 'action_parent_id'
     ];
 
     /**

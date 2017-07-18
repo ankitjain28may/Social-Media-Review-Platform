@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Group;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public static function getUsers() {
+        $group = Group::where('slug', 'user')->where('flag', 1)->first();
+        $user_s = Self::where('group_id', $group->id)->where('flag', 1)->get(['fb_id']);
+            
+        $users = [];
+
+        foreach ($user_s as $index => $user) {
+            $users[] = $user['fb_id'];
+        }
+
+        return $users;
+    }
+
+    public static function findByFbId($fb_id)
+    {
+        $user = Self::where('fb_id', $fb_id)->where('flag', 1)->first();
+        return $user;
+    }
 }

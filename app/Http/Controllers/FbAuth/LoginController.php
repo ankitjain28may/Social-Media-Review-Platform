@@ -74,8 +74,8 @@ class LoginController extends Controller
     public function handleCallback()
     {
         // $user = Socialite::driver('facebook')->user();
-        echo strtotime("2017-03-15T10:02:01+0000");
-        echo date('M d Y h i s', strtotime("2017-03-15T10:02:01+0000"));
+        // echo strtotime("2017-03-15T10:02:01+0000");
+        return date('Y-m-d h:i:s', strtotime("2017-03-15T10:02:01+0000"));
         echo "\n";
         echo (time()-2592000);
         echo date('M d Y', (time()-2592000));
