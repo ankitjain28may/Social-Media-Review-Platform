@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use  GroupTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {

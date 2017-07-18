@@ -23,8 +23,9 @@ class GroupTableSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'slug' => 'admin',
-                'is_admin' =>  1
-            ]
+                'is_admin' =>  1,
+                'level' => 1
+            ],
         ];
 
         Group::insert($data);
