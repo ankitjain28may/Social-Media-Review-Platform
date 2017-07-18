@@ -22,7 +22,7 @@ class CreateUserFbActionsTable extends Migration
             $table->string('action_parent_id')->default(0);
             $table->enum('action', ['like', 'comment', 'share']);
             $table->text('details')->nullable();
-            $table->timestamp('action_perform')->default('NULL');
+            $table->timestamp('action_perform')->default(NULL);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
