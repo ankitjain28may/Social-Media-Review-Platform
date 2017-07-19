@@ -162,6 +162,11 @@ class Post extends Model
             $res = $client->request('GET', Self::$base_uri.$id.'/sharedposts?fields=from,message,created_time&limit=25&after='.$after.'&access_token='.$access_token);
 
             $shares_data = json_decode($res->getBody(), True);
+
+            if ($id == "138483559560270_1640865172655427") {
+                return dd($post_data);
+            }
+
             // return $shares_data;
             if (count($shares_data['data'])) {
                 $shares += count($shares_data['data']);
