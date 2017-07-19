@@ -86,7 +86,10 @@ class ReportingController extends Controller
 
                     $shares_data = Post::getShares($page['id'], $post, $access_token);
 
-                    return $shares_data;
+                    if ($post_data['id'] == "138483559560270_1640865172655427") {
+                        return $shares_data;
+                        return dd($post_data);
+                    }
                     
                     $post->shares = $shares_data['shares'];
                     $post->internal_shares = $shares_data['internal_shares'];
