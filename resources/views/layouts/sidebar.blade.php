@@ -18,17 +18,17 @@
                                                 <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
                                             </li>
                                             <li>
-                                                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Filters</a>
+                                                <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
                                             </li>
-                                            <li>
+                                            <!-- <li>
                                                 <a href="#"><i class="fa fa-table fa-fw"></i>Clusters</a>
                                             </li>
                                             <li>
                                                 <a href="#"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                                                <ul class="nav nav-second-level">
+                                            </li> -->
+                                            <!-- <li>
+                                                <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a> -->
+                                                <!-- <ul class="nav nav-second-level">
                                                     <li>
                                                         <a href="panels-wells.html">Panels and Wells</a>
                                                     </li>
@@ -48,10 +48,10 @@
                                                         <a href="grid.html">Grid</a>
                                                     </li>
                                                 </ul>
-                                                <!-- /.nav-second-level -->
-                                            </li>
-                                            <li>
-                                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+ -->                                                <!-- /.nav-second-level -->
+                                            <!-- </li> -->
+                                            <!-- <li> -->
+                                                <!-- <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
                                                 <ul class="nav nav-second-level">
                                                     <li>
                                                         <a href="#">Second Level Item</a>
@@ -74,12 +74,12 @@
                                                             <li>
                                                                 <a href="#">Third Level Item</a>
                                                             </li>
-                                                        </ul>
+                                                        </ul> -->
                                                         <!-- /.nav-third-level -->
-                                                    </li>
-                                                </ul>
+                                                  <!--   </li>
+                                                </ul> -->
                                                 <!-- /.nav-second-level -->
-                                            </li>
+                                            <!-- </li>
                                             <li>
                                                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                                                 <ul class="nav nav-second-level">
@@ -90,8 +90,8 @@
                                                         <a href="login.html">Login Page</a>
                                                     </li>
                                                 </ul>
-                                                <!-- /.nav-second-level -->
-                                            </li>
+ -->                                                <!-- /.nav-second-level -->
+                                            <!-- </li> -->
                                         </ul>
                                     </div>
                                     <!-- /.sidebar-collapse -->

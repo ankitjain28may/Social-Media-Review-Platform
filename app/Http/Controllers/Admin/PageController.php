@@ -11,7 +11,7 @@ use Session;
 use Auth;
 use Redirect;
 
-class AdminPageController extends Controller
+class PageController extends Controller
 {
 
     protected $base_uri = 'https://graph.facebook.com/v2.9/';
@@ -41,13 +41,17 @@ class AdminPageController extends Controller
         $res = $client->request('GET', $this->base_uri.'me/accounts?limit=100&access_token='.$access_token);
         $page_s = json_decode($res->getBody(), True);
 
-
+        
         $pages = [];
-
-        foreach ($page_s['data'] as $index => $page) {
-            if (!Page::getPage($page['id'])) {
-                $pages[] = $page;
+        if (count($page_s['data'])) {
+            foreach ($page_s['data'] as $index => $page) {
+                if (!Page::getPage($page['id'])) {
+                    $pages[] = $page;
+                }
             }
+        } else {
+            Session::flash('message', 'Ooops!! Pages are not found');
+            Session::flash('alert-class', 'alert-danger');
         }
         return view('pages.add', compact('pages'));
     }
@@ -61,6 +65,11 @@ class AdminPageController extends Controller
     public function store(Request $request)
     {
         $pages = $request->get('pages');
+        if (!count($pages)) {
+            Session::flash('message', 'Please select at least 1 page from the list');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
         $flag = -1;
         foreach ($pages as $index => $page_data) {
             $page_data = json_decode($page_data, True);

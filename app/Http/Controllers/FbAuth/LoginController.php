@@ -33,12 +33,10 @@ class LoginController extends Controller
 
         $group_id = $request->get('state');
 
-        if ($user = User::where('email', $userAuth->email)->first()) {
-            Auth::loginUsingId($user->id);
-            return Redirect::to('/home');
+        if (!$user = User::where('email', $userAuth->email)->first()) {
+            $user = new User;
         }
 
-        $user = new User;
         $user->name = $userAuth->name;
         $user->email = $userAuth->email;
         $user->avatar = $userAuth->avatar;
@@ -47,8 +45,10 @@ class LoginController extends Controller
         $user->save();
 
         if ($group_id == 1) {
-            $fbUser = new FbUser;
-            $fbUser->user_id = $user->id;
+            $fbUser = FbUser::firstOrCreate([
+                "user_id" => $user->id,
+                "flag" => 1
+            ]);
             $fbUser->access_token = $userAuth->token;
             $fbUser->expires_in = $userAuth->expiresIn;
 
