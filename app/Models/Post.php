@@ -54,7 +54,7 @@ class Post extends Model
         $internal_likes = 0;
         
         do {
-            $res = $client->request('GET', Self::$base_uri.$post->fb_post_id.'/likes?after='.$after.'&access_token='.$access_token);
+            $res = $client->request('GET', Self::$base_uri.$post->fb_post_id.'/likes?limit=25&after='.$after.'&access_token='.$access_token);
             $likes_data = json_decode($res->getBody(), True);
             // return $likes_data;
             if (count($likes_data['data'])) {
@@ -100,7 +100,7 @@ class Post extends Model
         }
 
         do {
-            $res = $client->request('GET', Self::$base_uri.$id.'/comments?fields=from,message,comment_count,created_time&after='.$after.'&access_token='.$access_token);
+            $res = $client->request('GET', Self::$base_uri.$id.'/comments?fields=from,message,comment_count,created_time&limit=25&after='.$after.'&access_token='.$access_token);
 
             $comments_data = json_decode($res->getBody(), True);
             // return $comments_data;
@@ -159,7 +159,7 @@ class Post extends Model
         $id = $post->fb_post_id;
 
         do {
-            $res = $client->request('GET', Self::$base_uri.$id.'/sharedposts?fields=from,message,created_time&after='.$after.'&access_token='.$access_token);
+            $res = $client->request('GET', Self::$base_uri.$id.'/sharedposts?fields=from,message,created_time&limit=25&after='.$after.'&access_token='.$access_token);
 
             $shares_data = json_decode($res->getBody(), True);
             // return $shares_data;

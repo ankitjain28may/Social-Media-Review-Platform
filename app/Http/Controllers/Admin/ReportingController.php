@@ -43,7 +43,7 @@ class ReportingController extends Controller
 
             do {
 
-                $res = $client->request('GET', $this->base_uri.$page['fb_page_id'].'/posts?since='.$since.'&after='.$after.'&fields=created_time,message,description,id,name,attachments{media},permalink_url&access_token='.$access_token);
+                $res = $client->request('GET', $this->base_uri.$page['fb_page_id'].'/posts?since='.$since.'&after='.$after.'&fields=created_time,message,description,id,name,attachments{media},permalink_url&limit=25&access_token='.$access_token);
                 $post_s = json_decode($res->getBody(), True);
                 $after = isset($post_s['paging']['cursors']['after']) ? $post_s['paging']['cursors']['after'] : '';
 
