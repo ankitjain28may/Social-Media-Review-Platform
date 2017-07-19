@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Group;
+use DB;
 
 class User extends Authenticatable
 {
@@ -29,14 +30,19 @@ class User extends Authenticatable
     ];
 
 
-    public static function getUsers() {
-        $group = Group::where('slug', 'user')->where('flag', 1)->first();
-        $user_s = Self::where('group_id', $group->id)->where('flag', 1)->get(['fb_id']);
-            
+    public static function getUsers($slug = 'user') {
+
+        $query = DB::table('users')
+            ->join('groups', 'users.group_id', 'groups.id')
+            ->where('users.flag', 1)
+            ->where('groups.slug', $slug);
+
+        $user_s = $query->get(['fb_id']);
+                    
         $users = [];
 
         foreach ($user_s as $index => $user) {
-            $users[] = $user['fb_id'];
+            $users[] = $user->fb_id;
         }
 
         return $users;
@@ -46,5 +52,16 @@ class User extends Authenticatable
     {
         $user = Self::where('fb_id', $fb_id)->where('flag', 1)->first();
         return $user;
+    }
+
+    public static function getSlug($user_id) {
+        $group = DB::table('users')
+            ->where('users.id', $user_id)
+            ->where('users.flag', 1)
+            ->join('groups', 'users.group_id', '=', 'groups.id')
+            ->select('groups.slug')
+            ->get();
+
+        return $group; 
     }
 }

@@ -14,12 +14,16 @@
                                                 </div>
                                                 <!-- /input-group -->
                                             </li>
-                                            <li>
-                                                <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
-                                            </li>
-                                            <li>
-                                                <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
-                                            </li>
+                                            @if(Auth::check())
+                                                @if(App\User::getSlug(Auth::id())[0]->slug == "admin")
+                                                <li>
+                                                    <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
+                                                </li>
+                                                @endif
+                                            @endif
                                             <!-- <li>
                                                 <a href="#"><i class="fa fa-table fa-fw"></i>Clusters</a>
                                             </li>

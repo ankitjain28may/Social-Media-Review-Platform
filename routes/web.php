@@ -27,7 +27,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function() {
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
 	Route::resource('/pages', 'PageController');
 	Route::resource('/pages.posts', 'PostController');
 	Route::resource('/report', 'ReportingController');

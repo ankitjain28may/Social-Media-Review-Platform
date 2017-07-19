@@ -62,9 +62,14 @@
                     </form>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-4 col-md-offset-4">
+                                <a href="{{ url('/login/2/facebook') }}" class="btn btn-block btn-social btn-facebook">
+                                    <i class="fa fa-facebook"></i> User Sign In
+                                </a>
+                            </div>
+                             <div class="col-md-4">
                                 <a href="{{ url('/login/1/facebook') }}" class="btn btn-block btn-social btn-facebook">
-                                    <i class="fa fa-facebook"></i> Sign in with Facebook
+                                    <i class="fa fa-facebook"></i> Admin Sign In
                                 </a>
                             </div>
                         </div>
