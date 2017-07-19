@@ -92,7 +92,7 @@ class ReportingController extends Controller
             } while (isset($post_s['paging']['next']));
         }
 
-        return dd(Post::all());
+        return Redirect::to('/pages');
 
     }
 

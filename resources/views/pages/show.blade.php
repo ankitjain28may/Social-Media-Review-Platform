@@ -34,7 +34,7 @@
                       @if(count($pages)) 
                         @foreach($pages as $index => $page)
                           <tr class="gradeA odd" role="row">
-                            <td class="sorting_1">{{ $page['page_name'] }}</td>
+                            <td class="sorting_1"><a href="{{ url('pages/'.$page['id'].'/posts') }}">{{ $page['page_name'] }}</td>
                             <td>{{ $page['fb_page_id'] }}</td>
                             <td class="center">
                               <form action="{{ url('pages/'.$page['id'])}}" method="POST">
