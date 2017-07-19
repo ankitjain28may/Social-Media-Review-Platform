@@ -52,6 +52,12 @@ class ReportingController extends Controller
                 $users = User::getUsers();
 
                 foreach ($data as $index => $post_data) {
+
+                    if ($post_data['id'] == "138483559560270_1640865172655427") {
+                        return dd($post_data);
+                    }
+
+
                     if (!$post = Post::getPost($post_data['id'], $page['id'])) {
                         $post = new Post;
                         $post->fb_post_id = $post_data['id'];
