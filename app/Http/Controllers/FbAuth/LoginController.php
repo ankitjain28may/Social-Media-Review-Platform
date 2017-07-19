@@ -9,6 +9,7 @@ use Redirect;
 use App\User;
 use App\Models\FbUser;
 use Auth;
+use Session;
 
 class LoginController extends Controller
 {
@@ -37,14 +38,23 @@ class LoginController extends Controller
             $user = new User;
         }
 
+        if (isset($user->group_id) && $user->group_id != $group_id) {
+            Session::flash('message', 'Ooops!! Invalid Type of Login');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+
         $user->name = $userAuth->name;
         $user->email = $userAuth->email;
         $user->avatar = $userAuth->avatar;
-        $user->group_id = $group_id;
+        if (is_null($user->group_id)) {
+            $user->group_id = $group_id;
+        }
         $user->fb_id = $userAuth->id;
         $user->save();
 
         if ($group_id == 1) {
+
             $fbUser = FbUser::firstOrCreate([
                 "user_id" => $user->id,
                 "flag" => 1
@@ -74,7 +84,6 @@ class LoginController extends Controller
     public function handleCallback()
     {
 
-        return User::getSlug(Auth::id());
 
         // $user = Socialite::driver('facebook')->user();
         // echo strtotime("2017-03-15T10:02:01+0000");

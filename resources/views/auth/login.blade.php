@@ -2,6 +2,9 @@
 
 @section('content')
 <div id="page-wrapper">
+    @if(Session::has('message'))
+      <p class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissable">{{ Session::get('message') }}</p>
+    @endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
