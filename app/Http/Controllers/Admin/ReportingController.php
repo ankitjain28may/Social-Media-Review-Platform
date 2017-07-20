@@ -88,7 +88,6 @@ class ReportingController extends Controller
 
                     if ($post_data['id'] == "138483559560270_1640865172655427") {
                         return $shares_data;
-                        return dd($post_data);
                     }
                     
                     $post->shares = $shares_data['shares'];
