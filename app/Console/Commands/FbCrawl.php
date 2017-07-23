@@ -51,7 +51,8 @@ class FbCrawl extends Command
      */
     public function handle()
     {
-        $this->line("Start");
+        $this->comment("Start Crawling....");
+
         $allUsers = FbUser::where('flag', 1)->get();
         foreach ($allUsers as $index => $allUser) {
             
@@ -68,7 +69,6 @@ class FbCrawl extends Command
 
             foreach ($pages as $key => $page) {
 
-                $this->comment((time()-strtotime($page->last_crawl) < $this->lastWeek));
                 if (time()-strtotime($page->last_crawl) < $this->lastWeek) {
                     continue;
                 }
@@ -88,8 +88,8 @@ class FbCrawl extends Command
 
                     foreach ($data as $index => $post_data) {
 
-                        
-
+                        // Output
+                        $this->output->write('Collecting data from '.$page->name."=>".$post_data['id'], false);
 
                         if (!$post = Post::getPost($post_data['id'], $page['id'])) {
                             $post = new Post;
