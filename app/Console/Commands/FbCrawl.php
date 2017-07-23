@@ -25,6 +25,7 @@ class FbCrawl extends Command
 
     // Timestamp of 4 weeks
     protected $fourWeek = 2592000;
+    protected $lastWeek = 604800;
 
     /**
      * The console command description.
@@ -66,6 +67,13 @@ class FbCrawl extends Command
             $after = '';
 
             foreach ($pages as $key => $page) {
+
+                if ($page->last_crawl == "" || is_null($page->last_crawl) || time()-strtotime($page->last_crawl) < $this->lastWeek) {
+                    continue;
+                }
+
+                $page->last_crawl = date('Y-m-d h:i:s', time());
+                $page->save();
 
                 do {
 

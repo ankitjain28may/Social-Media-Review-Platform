@@ -21,6 +21,7 @@ class CreatePagesTable extends Migration
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->tinyInteger('flag')->default(1);
+            $table->string('last_crawl')->nullable();
             $table->timestamps();
         });
     }

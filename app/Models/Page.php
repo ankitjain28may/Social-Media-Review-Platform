@@ -13,7 +13,7 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'fb_page_id', 'page_name', 'page_access_token', 'user_id', 'flag',
+        'fb_page_id', 'page_name', 'page_access_token', 'user_id', 'flag', 'last_crawl',
     ];
 
     /**

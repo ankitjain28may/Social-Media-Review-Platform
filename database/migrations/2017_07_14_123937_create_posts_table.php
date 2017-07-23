@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->unsignedInteger('page_id');
             $table->string('fb_post_id');
             $table->string('post_name')->nullable();
-            $table->text('post_message');
+            $table->text('post_message')->nullable();
             $table->text('link')->nullable();
             $table->text('media')->nullable();
             $table->integer('likes')->default(0);
