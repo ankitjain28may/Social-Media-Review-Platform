@@ -77,7 +77,7 @@ class FbCrawl extends Command
 
                 do {
 
-                    $res = $client->request('GET', $this->base_uri.$page['fb_page_id'].'/posts?since='.$since.'&after='.$after.'&fields=created_time,message,description,id,name,attachments{media},permalink_url&limit=25&access_token='.$access_token);
+                    $res = $client->request('GET', $this->base_uri.$page['fb_page_id'].'/posts?since='.$since.'&after='.$after.'&fields=created_time,shares,message,description,id,name,attachments{media},permalink_url&limit=25&access_token='.$access_token);
                     $post_s = json_decode($res->getBody(), True);
                     $after = isset($post_s['paging']['cursors']['after']) ? $post_s['paging']['cursors']['after'] : '';
 
@@ -120,7 +120,7 @@ class FbCrawl extends Command
 
                         $shares_data = Post::getShares($page['id'], $post, $access_token);
                         
-                        $post->shares = $shares_data['shares'];
+                        $post->shares = $post_data['shares']['count'];
                         $post->internal_shares = $shares_data['internal_shares'];
 
                         $post->save();

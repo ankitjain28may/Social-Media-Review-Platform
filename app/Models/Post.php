@@ -54,7 +54,7 @@ class Post extends Model
         $internal_likes = 0;
         
         do {
-            $res = $client->request('GET', Self::$base_uri.$post->fb_post_id.'/likes?limit=25&after='.$after.'&access_token='.$access_token);
+            $res = $client->request('GET', Self::$base_uri.$post->fb_post_id.'/reactions?limit=25&after='.$after.'&access_token='.$access_token);
             $likes_data = json_decode($res->getBody(), True);
             // return $likes_data;
             if (count($likes_data['data'])) {
