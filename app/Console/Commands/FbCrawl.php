@@ -54,6 +54,7 @@ class FbCrawl extends Command
     public function handle()
     {
         $this->comment("Start Crawling....\n");
+        $pages = [];
 
         $allUsers = FbUser::where('flag', 1)->get();
         foreach ($allUsers as $index => $allUser) {
@@ -91,7 +92,7 @@ class FbCrawl extends Command
                     foreach ($data as $index => $post_data) {
 
                         $this->count+=1;
-                        
+
                         // Output
                         $this->output->write("\r\r\t\t".' Collecting data from Page: ', false);
                         $this->info($page->page_name." => ".$post_data['id'], false);
@@ -136,11 +137,11 @@ class FbCrawl extends Command
 
                 } while (isset($post_s['paging']['next']));
             }
-            if ($this->count == 0) {
-                $this->output->write("\t\tNo new post to crawl!", True);
-            }
-            $this->info("\nSuccessfully Crawled ".$this->count." Post(s) from ".count($pages). " Page(s)");
         }
+        if ($this->count == 0) {
+            $this->output->write("\t\tNo new post to crawl!", True);
+        }
+        $this->info("\nSuccessfully Crawled ".$this->count." Post(s) from ".count($pages). " Page(s)");
 
     }
 }
