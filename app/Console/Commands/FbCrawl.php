@@ -68,7 +68,8 @@ class FbCrawl extends Command
 
             foreach ($pages as $key => $page) {
 
-                if (!is_null($page->last_crawl) || time()-strtotime($page->last_crawl) < $this->lastWeek) {
+                $this->log((time()-strtotime($page->last_crawl) < $this->lastWeek));
+                if (time()-strtotime($page->last_crawl) < $this->lastWeek) {
                     continue;
                 }
 
