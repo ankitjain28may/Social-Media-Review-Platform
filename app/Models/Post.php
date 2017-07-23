@@ -163,10 +163,6 @@ class Post extends Model
 
             $shares_data = json_decode($res->getBody(), True);
 
-            if ($id == "138483559560270_1640865172655427") {
-                return dd($post_data);
-            }
-
             // return $shares_data;
             if (count($shares_data['data'])) {
                 $shares += count($shares_data['data']);
