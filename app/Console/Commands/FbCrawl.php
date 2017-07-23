@@ -119,10 +119,11 @@ class FbCrawl extends Command
                         $post->comments = $comments_data['comments'];
                         $post->internal_comments = $comments_data['internal_comments'];
 
-                        $shares_data = Post::getShares($page['id'], $post, $access_token);
-                        
-                        $post->shares = $post_data['shares']['count'];
-                        $post->internal_shares = $shares_data['internal_shares'];
+                        if (isset($post_data['shares'])) {
+                            $shares_data = Post::getShares($page['id'], $post, $access_token);
+                            $post->shares = $post_data['shares']['count'];
+                            $post->internal_shares = $shares_data['internal_shares'];
+                        }
 
                         $post->save();
 
