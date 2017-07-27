@@ -31,6 +31,9 @@
         #page-wrapper {
             padding-top: 30px;
         }
+        .center {
+            text-align: center;
+        }
         @yield('style')
     </style>
 

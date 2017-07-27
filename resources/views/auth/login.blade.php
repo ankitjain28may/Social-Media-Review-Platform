@@ -70,11 +70,6 @@
                                     <i class="fa fa-facebook"></i> User Sign In
                                 </a>
                             </div>
-                             <div class="col-md-4">
-                                <a href="{{ url('/login/1/facebook') }}" class="btn btn-block btn-social btn-facebook">
-                                    <i class="fa fa-facebook"></i> Admin Sign In
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -102,7 +102,7 @@ class FbCrawl extends Command
                             $post->fb_post_id = $post_data['id'];
                             $post->page_id = $page['id'];
 
-                            $post->post_name = isset($post_data['name']) ? $post_data['name'] : null;
+                            $post->post_name = isset($post_data['name']) ? $post_data['name'] : $post_data['id'];
                             
                             if (isset($post_data['message'])) {
                                 $post->post_message = $post_data['message'];

@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserFbActions extends Model
+class TwitterUsersHandle extends Model
 {
-    protected $table = 'user_fb_actions';
+    protected $table = 'twitter_user_handles';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'page_id', 'post_id', 'action', 'details', 'action_perform', 'action_id', 'action_parent_id'
+        'handle', 'flag',
     ];
 
     /**
@@ -23,4 +23,11 @@ class UserFbActions extends Model
      */
     protected $hidden = [
     ];
+
+    public static function getHandles()
+    {
+        $handles = Self::where('flag', 1)->get();
+
+        return $handles;
+    }
 }

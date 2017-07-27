@@ -24,18 +24,12 @@
                   <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline" id="dataTables-example" role="grid" aria-describedby="dataTables-example_info" style="width: 100%;">
                     <thead>
                       <tr role="row">
-                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 102px;">Post Name</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Post Id</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Post Message</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Post Link</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Post Media</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Total Likes</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Total comments</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Total Shares</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Internal Likes</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Internal comments</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 126px;">Internal Shares</th>
-                        <th class="sorting" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 86px;">Created Time</th>
+                        <th class="sorting_asc center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Post Name</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Post Message</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Likes</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Comments</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Shares</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Created Time</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -43,18 +37,13 @@
                       @if(count($posts)) 
                         @foreach($posts as $index => $post)
                           <tr class="gradeA odd" role="row">
-                            <td class="sorting_1"><a href="{{ url('pages/'.$post['id'].'/posts') }}">{{ $post['post_name'] }}</td>
-                            <td>{{ $post['fb_post_id'] }}</td>
-                            <td>{{ $post['post_message'] }}</td>
-                            <td>{{ $post['link'] }}</td>
-                            <td>{{ $post['media'] }}</td>
-                            <td>{{ $post['likes'] }}</td>
-                            <td>{{ $post['comments'] }}</td>
-                            <td>{{ $post['shares'] }}</td>
-                            <td>{{ $post['internal_likes'] }}</td>
-                            <td>{{ $post['internal_comments'] }}</td>
-                            <td>{{ $post['internal_shares'] }}</td>
-                            <td>{{ $post['created_time'] }}</td>
+                            <td class="sorting_1"><a href="{{ url('posts/'.$post['id'].'/activity') }}">{{ $post['post_name'] }}</td>
+                            <!-- <td>{{ $post['fb_post_id'] }}</td> -->
+                            <td >{{ (strlen($post['post_message']) > 10) ? substr($post['post_message'],0, 10).'...' : $post['post_message'] }}</td>
+                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-likes') }}">{{ $post['internal_likes']."/".$post['likes'] }}</a></td>
+                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-comments') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
+                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-shares') }}">{{ $post['internal_shares']."/".$post['shares'] }}</a></td>
+                            <td class="center">{{ $post['created_time'] }}</td>
                           </tr>
                         @endforeach @else
                       <tr class="gradeA odd" role="row">

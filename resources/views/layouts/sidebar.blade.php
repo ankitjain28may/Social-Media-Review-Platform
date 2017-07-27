@@ -16,11 +16,18 @@
                                             </li>
                                             @if(Auth::check())
                                                 @if(App\User::getSlug(Auth::id())[0]->slug == "admin")
+                                                <li><a href="{{ route('register') }}"> <i class="fa fa-edit fa-fw"></i> Register New Page Admin</a></li>
+
                                                 <li>
                                                     <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url('/login/1/facebook') }}">
+                                                        <i class="fa fa-facebook fa-fw"></i> Link Facebook
+                                                    </a>
                                                 </li>
                                                 @endif
                                             @endif

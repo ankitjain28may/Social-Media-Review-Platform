@@ -179,6 +179,7 @@ return [
 
         // Socialite
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Thujohn\Twitter\TwitterServiceProvider::class,
 
     ],
 
@@ -229,6 +230,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
 
     ],
 

@@ -30,6 +30,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
 	Route::resource('/pages', 'PageController');
 	Route::resource('/pages.posts', 'PostController');
+	Route::resource('/posts.activity', 'ActivityController');
+	Route::get('/posts/{post_id}/users-{activity?}', 'PostUserController@index');
 	Route::resource('/report', 'ReportingController');
+	Route::resource('/twitter-posts', 'TwitterHandleActivityController');
 
 });

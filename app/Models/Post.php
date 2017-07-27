@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Client;
 use App\User;
-use App\Models\UserFbActions;
+use App\Models\UserFbAction;
 
 class Post extends Model
 {
@@ -65,7 +65,7 @@ class Post extends Model
                     if (in_array($like['id'], $users)) {
 
                         $user = User::findByFbId($like['id']);
-                        $actions = UserFbActions::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action' => 'like']);
+                        $actions = UserFbAction::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action' => 'like']);
                         $internal_likes += 1;
                     }
                 }
@@ -111,7 +111,7 @@ class Post extends Model
                     if (in_array($comment['from']['id'], $users)) {
 
                         $user = User::findByFbId($comment['from']['id']);
-                        $actions = UserFbActions::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action_id' => $comment['id'], 'action' => 'comment']);
+                        $actions = UserFbAction::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action_id' => $comment['id'], 'action' => 'comment']);
                         if($actions->details == NULL) {
                             $actions->details = $comment['message'];
                         }
@@ -171,7 +171,7 @@ class Post extends Model
                     if (in_array($share['from']['id'], $users)) {
 
                         $user = User::findByFbId($share['from']['id']);
-                        $actions = UserFbActions::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action_id' => $share['id'], 'action' => 'share']);
+                        $actions = UserFbAction::firstOrCreate(['user_id'=> $user->id, 'page_id' => $page_id, 'post_id' => $post->id, 'action_id' => $share['id'], 'action' => 'share']);
                         if($actions->details == NULL) {
                             $actions->details = isset($share['message']) ? $share['message'] : NULL;
                         }

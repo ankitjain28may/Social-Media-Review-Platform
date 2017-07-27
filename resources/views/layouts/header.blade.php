@@ -14,7 +14,6 @@
     <!-- Authentication Links -->
     @if (Auth::guest())
         <li><a href="{{ route('login') }}">Login</a></li>
-        <li><a href="{{ route('register') }}">Register</a></li>
     @else
         <!-- /.dropdown -->
         <li class="dropdown">
