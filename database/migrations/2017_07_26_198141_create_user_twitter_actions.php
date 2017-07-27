@@ -20,6 +20,7 @@ class CreateUserTwitterActions extends Migration
             $table->string('action_id')->nullable();
             $table->string('action_parent_id')->default(0);
             $table->enum('action', ['favourite', 'comment', 'retweet', 'hashtag', 'mention']);
+            $table->integer('mention_handle_id');
             $table->text('details')->nullable();
             $table->string('action_perform')->nullable();
             $table->foreign('twitter_user_id')->references('id')->on('twitter_user_handles')->onDelete('cascade');

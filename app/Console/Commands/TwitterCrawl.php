@@ -164,6 +164,7 @@ class TwitterCrawl extends Command
 
                         'twitter_user_id' => $handle->id,
                         'action_id' => $tweet['id'],
+                        'twitter_post_id' => $twitter_post['id'],
                         'action' => 'comment',
                         'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['in_reply_to_screen_name'])->id
                     ]);
@@ -173,7 +174,6 @@ class TwitterCrawl extends Command
                     }
 
                     $user_action->action_parent_id = $tweet['in_reply_to_status_id'];
-                    $user_action->twitter_post_id = $twitter_post['id'];
                     $user_action->details = $tweet['text'];
                     $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                     $user_action->save();
@@ -189,6 +189,7 @@ class TwitterCrawl extends Command
 
                         'twitter_user_id' => $handle->id,
                         'action_id' => $tweet['id'],
+                        'twitter_post_id' => $twitter_post['id'],
                         'action' => 'retweet',
                         'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name'])->id
                     ]);
@@ -198,7 +199,6 @@ class TwitterCrawl extends Command
                     }
                     
                     $user_action->action_parent_id = $tweet['quoted_status_id'];
-                    $user_action->twitter_post_id = $twitter_post['id'];
                     $user_action->details = $tweet['text'];
                     $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                     $user_action->save();
@@ -214,12 +214,12 @@ class TwitterCrawl extends Command
 
                                 'twitter_user_id' => $handle->id,
                                 'action_id' => $tweet['id'],
+                                'twitter_post_id' => $twitter_post['id'],
                                 'action' => 'mention',
                                 'mention_handle_id' => TwitterHandle::findByTwitterHandle($mention['screen_name'])->id
                             ]);
 
                             $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
-                            $user_action->twitter_post_id = $twitter_post['id'];
                             $user_action->details = $tweet['screen_name'];
                             $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                             $user_action->save();
