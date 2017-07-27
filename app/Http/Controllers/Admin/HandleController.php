@@ -124,7 +124,16 @@ class HandleController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return $id;
+        $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        if (is_null($handle)) {
+            Session::flash('message', 'Ooops!! Handle is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+
+        return view('twitter.handles.edit', compact('handle'));
+
     }
 
     /**
@@ -136,7 +145,28 @@ class HandleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $this->validate(
+            $request, [
+            'handle' => 'required',
+            ]
+        );
+
+        $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        if (is_null($handle)) {
+            Session::flash('message', 'Ooops!! Handle is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::to('/handles');
+        }
+
+        $handle->handle = Input::get('handle');
+        $handle->save();
+
+        Session::flash('message', 'Handle is updated successfully');
+        Session::flash('alert-class', 'alert-success');
+
+        return Redirect::to('/handles');
+
+
     }
 
     /**

@@ -9,7 +9,7 @@
         <div class="panel-heading">
             <div class="row">
               <div class="col-sm-6">
-                Posts
+                Handles
               </div>
               <div class="col-sm-6">
                 <a href= "{{ url('/handles/create') }}"><button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Add More Handles</button></a>
