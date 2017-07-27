@@ -16,6 +16,7 @@ class CreateTwitterHandles extends Migration
         Schema::create('twitter_handles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('handle')->nullable();
+            $table->string('name')->nullable();
             $table->string('last_crawl')->nullable();
             $table->tinyInteger('flag')->default(1);
             $table->timestamps();

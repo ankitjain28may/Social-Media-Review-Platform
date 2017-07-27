@@ -180,6 +180,7 @@ return [
         // Socialite
         Laravel\Socialite\SocialiteServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -231,6 +232,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Twitter' => Thujohn\Twitter\Facades\Twitter::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

@@ -13,7 +13,7 @@ class TwitterUsersHandle extends Model
      * @var array
      */
     protected $fillable = [
-        'handle', 'flag',
+        'handle', 'flag', 'name',
     ];
 
     /**
@@ -29,5 +29,11 @@ class TwitterUsersHandle extends Model
         $handles = Self::where('flag', 1)->get();
 
         return $handles;
+    }
+
+    public static function findByTwitterHandle($handle)
+    {
+        $user = Self::where('handle', $handle)->where('flag', 1)->first();
+        return $user;
     }
 }

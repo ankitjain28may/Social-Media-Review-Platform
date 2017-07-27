@@ -27,6 +27,8 @@
 
     <!-- Custom Fonts -->
     <link href="{{ asset('startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+
     <style type="text/css">
         #page-wrapper {
             padding-top: 30px;

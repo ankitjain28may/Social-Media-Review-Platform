@@ -22,6 +22,9 @@
                                                     <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
                                                 </li>
                                                 <li>
+                                                    <a href="{{ url('/handles') }}"><i class="fa fa-dashboard fa-fw"></i> Handles</a>
+                                                </li>
+                                                <li>
                                                     <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
                                                 </li>
                                                 <li>

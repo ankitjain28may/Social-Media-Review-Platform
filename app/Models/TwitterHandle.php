@@ -13,7 +13,7 @@ class TwitterHandle extends Model
      * @var array
      */
     protected $fillable = [
-        'handle', 'flag',
+        'handle', 'flag', 'name',
     ];
 
     /**

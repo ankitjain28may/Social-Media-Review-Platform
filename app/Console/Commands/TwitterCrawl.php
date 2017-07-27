@@ -61,8 +61,6 @@ class TwitterCrawl extends Command
                 continue;
             }
 
-            $handle->last_crawl = date('Y-m-d h:i:s', time());
-            $handle->save();
 
             $param = [
                 'screen_name' => $handle->handle,
@@ -71,6 +69,12 @@ class TwitterCrawl extends Command
             ];
 
             $handleTweets = Twitter::getUserTimeline($param);
+            
+            $handle->last_crawl = date('Y-m-d h:i:s', time());
+            if (isset($handleTweets[0]['user']['name'])) {
+                $handle->name = ucwords($handleTweets[0]['user']['name']);
+            }
+            $handle->save();
             // return dd($handleTweets);
 
             // Output
@@ -126,9 +130,6 @@ class TwitterCrawl extends Command
                 continue;
             }
 
-            $handle->last_crawl = date('Y-m-d h:i:s', time());
-            $handle->save();
-
             $param = [
                 'screen_name' => $handle->handle,
                 'count' => 200,
@@ -136,6 +137,13 @@ class TwitterCrawl extends Command
             ];
 
             $handleTweets = Twitter::getUserTimeline($param);
+
+            $handle->last_crawl = date('Y-m-d h:i:s', time());
+            if (isset($handleTweets[0]['user']['name'])) {
+                $handle->name = ucwords($handleTweets[0]['user']['name']);
+            }
+            $handle->save();
+
             // return dd($handleTweets);
 
             // Output

@@ -34,7 +34,7 @@ class TwitterHandleActivityController extends Controller
             ];
 
             $handleTweets = Twitter::getUserTimeline($param);
-            // return dd($handleTweets);
+            return dd($handleTweets[0]['user']);
             foreach ($handleTweets as $index => $tweet) {
 
                 if (is_null($tweet['in_reply_to_status_id'])) {
