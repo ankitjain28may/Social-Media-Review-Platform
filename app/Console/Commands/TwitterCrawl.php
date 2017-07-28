@@ -208,7 +208,15 @@ class TwitterCrawl extends Command
                     foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
                         if ($mention['screen_name'] != $tweet['in_reply_to_screen_name'] && in_array($mention['screen_name'], $handles_array)) {
 
-                            $twitter_post = TwitterPost::getPost($tweet['quoted_status_id'] || $tweet['in_reply_to_status_id']);
+                            $twitter_post = [];
+
+                            if (isset($tweet['quoted_status_id'])) {
+                                $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
+                            } elseif (isset($tweet['in_reply_to_status_id'])) {
+                                $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
+                            } else {
+                                continue;
+                            }
                             
                             $user_action = UserTwitterAction::firstOrCreate([
 
