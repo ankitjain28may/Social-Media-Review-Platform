@@ -90,77 +90,77 @@ class TwitterHandleActivityController extends Controller
 
                 // Comment
                 try {
-                if (!is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && in_array($tweet['in_reply_to_screen_name'], $handles_array)) {
+                    if (!is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && in_array($tweet['in_reply_to_screen_name'], $handles_array)) {
 
-                    $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
+                        $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
 
 
-                    $user_action = UserTwitterAction::firstOrCreate([
+                        $user_action = UserTwitterAction::firstOrCreate([
 
-                        'twitter_user_id' => $handle->id,
-                        'action_id' => $tweet['id'],
-                        'action' => 'comment',
-                        'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['in_reply_to_screen_name'])->id
-                    ]);
+                            'twitter_user_id' => $handle->id,
+                            'action_id' => $tweet['id'],
+                            'action' => 'comment',
+                            'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['in_reply_to_screen_name'])->id
+                        ]);
 
-                    if ($user_action->wasRecentlyCreated) {
-                        TwitterPost::updateData($twitter_post['id'], 'comments');
+                        if ($user_action->wasRecentlyCreated) {
+                            TwitterPost::updateData($twitter_post['id'], 'comments');
+                        }
+
+                        $user_action->action_parent_id = $tweet['in_reply_to_status_id'];
+                        $user_action->twitter_post_id = $twitter_post['id'];
+                        $user_action->details = $tweet['text'];
+                        $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
+                        $user_action->save();
+
+                    } 
+                    // Retweet
+                    elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
+                        
+                        $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
+
+
+                        $user_action = UserTwitterAction::firstOrCreate([
+
+                            'twitter_user_id' => $handle->id,
+                            'action_id' => $tweet['id'],
+                            'action' => 'retweet',
+                            'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name'])->id
+                        ]);
+
+                        if ($user_action->wasRecentlyCreated) {
+                            TwitterPost::updateData($twitter_post['id'], 'retweets');
+                        }
+                        
+                        $user_action->action_parent_id = $tweet['quoted_status_id'];
+                        $user_action->twitter_post_id = $twitter_post['id'];
+                        $user_action->details = $tweet['text'];
+                        $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
+                        $user_action->save();
                     }
 
-                    $user_action->action_parent_id = $tweet['in_reply_to_status_id'];
-                    $user_action->twitter_post_id = $twitter_post['id'];
-                    $user_action->details = $tweet['text'];
-                    $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
-                    $user_action->save();
+                    if (isset($tweet['entities']['user_mentions'])) {
+                        foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
+                            if ($mention['screen_name'] != $tweet['in_reply_to_screen_name'] && in_array($mention['screen_name'], $handles_array)) {
 
-                } 
-                // Retweet
-                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
-                    
-                    $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
+                                $twitter_post = TwitterPost::getPost($tweet['quoted_status_id'] || $tweet['in_reply_to_status_id']);
+                                
+                                $user_action = UserTwitterAction::firstOrCreate([
 
+                                    'twitter_user_id' => $handle->id,
+                                    'action_id' => $tweet['id'],
+                                    'action' => 'mention',
+                                    'mention_handle_id' => TwitterHandle::findByTwitterHandle($mention['screen_name'])->id
+                                ]);
 
-                    $user_action = UserTwitterAction::firstOrCreate([
-
-                        'twitter_user_id' => $handle->id,
-                        'action_id' => $tweet['id'],
-                        'action' => 'retweet',
-                        'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name'])->id
-                    ]);
-
-                    if ($user_action->wasRecentlyCreated) {
-                        TwitterPost::updateData($twitter_post['id'], 'retweets');
-                    }
-                    
-                    $user_action->action_parent_id = $tweet['quoted_status_id'];
-                    $user_action->twitter_post_id = $twitter_post['id'];
-                    $user_action->details = $tweet['text'];
-                    $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
-                    $user_action->save();
-                }
-
-                if (isset($tweet['entities']['user_mentions'])) {
-                    foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
-                        if ($mention['screen_name'] != $tweet['in_reply_to_screen_name'] && in_array($mention['screen_name'], $handles_array)) {
-
-                            $twitter_post = TwitterPost::getPost($tweet['quoted_status_id'] || $tweet['in_reply_to_status_id']);
-                            
-                            $user_action = UserTwitterAction::firstOrCreate([
-
-                                'twitter_user_id' => $handle->id,
-                                'action_id' => $tweet['id'],
-                                'action' => 'mention',
-                                'mention_handle_id' => TwitterHandle::findByTwitterHandle($mention['screen_name'])->id
-                            ]);
-
-                            $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
-                            $user_action->twitter_post_id = $twitter_post['id'];
-                            $user_action->details = $tweet['screen_name'];
-                            $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
-                            $user_action->save();
+                                $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
+                                $user_action->twitter_post_id = $twitter_post['id'];
+                                $user_action->details = $tweet['screen_name'];
+                                $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
+                                $user_action->save();
+                            }
                         }
                     }
-                }
 
                 }
                 catch(Exception $e) {
