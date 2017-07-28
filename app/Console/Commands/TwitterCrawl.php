@@ -244,7 +244,12 @@ class TwitterCrawl extends Command
                 // Mentions
                 if (isset($tweet['entities']['user_mentions'])) {
                     foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
-                        if ($mention['screen_name'] != $tweet['in_reply_to_screen_name'] && in_array($mention['screen_name'], $handles_array)) {
+
+                        if ($mention['screen_name'] == $tweet['in_reply_to_screen_name']) {
+                            continue;
+                        } elseif (isset($tweet['quoted_status']['user']['screen_name'])  && $mention['screen_name'] == $tweet['quoted_status']['user']['screen_name']) {
+                            continue;
+                        } elseif(in_array($mention['screen_name'], $handles_array)) {
 
                             $twitter_post = [];
 
@@ -254,10 +259,6 @@ class TwitterCrawl extends Command
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
                                 $twitter_post['id'] = null;
-                            }
-
-                            if (is_null($twitter_post)) {
-                                continue;
                             }
                             
                             $user_action = UserTwitterAction::firstOrCreate([
@@ -286,22 +287,15 @@ class TwitterCrawl extends Command
 
                             $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['in_reply_to_screen_name']);
 
-                        } elseif (isset($tweet['retweeted_status']['user']['screen_name'])  && !is_null($tweet['retweeted_status']['user']['screen_name'])) {
-
-                            $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['retweeted_status']['user']['screen_name']);
-
                         } elseif (isset($tweet['quoted_status']['user']['screen_name'])  && !is_null($tweet['quoted_status']['user']['screen_name'])) {
 
                             $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name']);
 
                         } else {
-                            continue;
+                            $twitter_handle['id'] = 0;
                         }
 
-                        if (is_null($twitter_handle)) {
-                            continue;
-                        }
-                        $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle->id);
+                        $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle['id']);
                         if (!is_null($hashtag)) {
 
                             $twitter_post = [];
@@ -311,11 +305,7 @@ class TwitterCrawl extends Command
                             } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
-                                $twitter_post['id'] = null; 
-                            }
-
-                            if (is_null($twitter_post)) {
-                                continue;
+                                $twitter_post['id'] = null;
                             }
                                                         
                             $user_action = UserTwitterAction::firstOrCreate([

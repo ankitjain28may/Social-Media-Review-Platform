@@ -25,9 +25,12 @@ class Hashtag extends Model
     ];
 
 
-    public static function getHashtag($name, $twitter_handle_id)
+    public static function getHashtag($name, $twitter_handle_id = 0)
     {
-        $query = Self::where('name', $name)->where('twitter_handle_id', $twitter_handle_id);
+        $query = Self::where('name', $name);
+        if ($twitter_handle_id) {
+            $query->where('twitter_handle_id', $twitter_handle_id);
+        }
         $query->where('flag', 1);
 
         $hashtag = $query->first();
