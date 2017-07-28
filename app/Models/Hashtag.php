@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
+use DB;
 
 class Hashtag extends Model
 {
@@ -36,5 +38,17 @@ class Hashtag extends Model
         $hashtag = $query->first();
 
         return $hashtag;
+    }
+
+    public static function getHashtags()
+    {
+        $query = DB::table('hashtags');
+        $query->where('hashtags.flag', 1);
+        $query->join('twitter_handles', 'hashtags.twitter_handle_id', 'twitter_handles.id');
+        $query->select('hashtags.*', 'twitter_handles.handle', 'twitter_handles.name as handle_name');
+
+        $hashtags = $query->paginate(25);
+
+        return $hashtags;
     }
 }

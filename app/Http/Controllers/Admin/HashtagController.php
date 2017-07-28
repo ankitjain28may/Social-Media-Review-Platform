@@ -4,35 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
-use App\Models\FbUser;
-use App\Models\Page;
-use App\Models\Post;
+use App\Models\Hashtag;
+use App\Models\TwitterHandle;
 use Session;
 use Auth;
 use Redirect;
 use Illuminate\Pagination\Paginator;
 
 
-class PostController extends Controller
+class HashtagController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($page_id, $limit = 25, $offset = 0)
+    public function index()
     {
-        $page = Page::where('id', $page_id)->where('flag', 1)->first();
-        if (is_null($page)) {
-            Session::flash('message', 'Ooops!! Invalid Page');
-            Session::flash('alert-class', 'alert-info');
-            return Redirect::back();
-        }
-
-        $posts = Post::where('page_id', $page_id)->where('flag', 1)->paginate($limit);
-        return view('posts.show', compact('posts'));
-
+        $hashtags = Hashtag::getHashtags();
+        // return dd($hashtags);
+        return view('hashtag.show', compact('hashtags'));
     }
 
     /**
@@ -42,7 +33,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $handles = TwitterHandle::getHandles();
+        return view('hashtag.create', compact('handles'));
+
     }
 
     /**
@@ -75,7 +68,16 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $hashtag = Hashtag::where('id', $id)->where('flag', 1)->first();
+
+        if (is_null($hashtag)) {
+            Session::flash('message', 'Ooops!! Hashtag is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+        $handles = TwitterHandle::getHandles();
+        
+        return view('hashtag.edit', compact('hashtag', 'handles'));
     }
 
     /**
@@ -98,6 +100,20 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $hashtag = Hashtag::where('id', $id)->where('flag', 1)->first();
+
+        if (is_null($hashtag)) {
+            Session::flash('message', 'Ooops!! Hashtag is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+
+        $hashtag->flag = 0;
+        $hashtag->save();
+        Session::flash('message', 'Hashtag is deleted successfully');
+        Session::flash('alert-class', 'alert-success');
+
+        return Redirect::to('/hashtags');
     }
 }

@@ -20,6 +20,9 @@
 
                                                 <li>
                                                     <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
+                                                </li> 
+                                                <li>
+                                                    <a href="{{ url('/hashtags') }}"><i class="fa fa-dashboard fa-fw"></i> Hashtags </a>
                                                 </li>
                                                 <li>
                                                     <a href="#"><i class="fa fa-dashboard fa-fw"></i> Handles</a>

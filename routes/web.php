@@ -35,7 +35,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 	Route::resource('/report', 'ReportingController');
 	Route::resource('/twitter-posts', 'TwitterHandleActivityController');
 	Route::resource('/handles', 'HandleController');
+	Route::resource('/hashtags', 'HashtagController');
 	Route::get('/handles/{id}/delete', 'HandleController@destroy');
+	Route::get('/hashtags/{id}/delete', 'HashtagController@destroy');
 
 });
 
