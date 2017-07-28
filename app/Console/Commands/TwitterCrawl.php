@@ -101,20 +101,20 @@ class TwitterCrawl extends Command
                     if (isset($tweet['entities']['media'])) {
                         $post->media = serialize($tweet['entities']['media']);
                     }
-                    $hashtags = "";
+                    $hashtags = [];
                     if (isset($tweet['entities']['hashtags'])) {
                         foreach ($tweet['entities']['hashtags'] as $key => $hashtag) {
-                            $hashtags .= $hashtag['text']." ,";
+                            $hashtags[] = $hashtag['text']." ,";
                         }
                     }
-                    $post->hashtags = $hashtags;
-                    $mentions = "";
+                    $post->hashtags = implode(",", $hashtags);
+                    $mentions = [];
                     if (isset($tweet['entities']['user_mentions'])) {
                         foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
-                            $mentions .= $mention['screen_name']." ,";
+                            $mentions[] = $mention['screen_name']." ,";
                         }
                     }
-                    $post->mentions = $mentions;
+                    $post->mentions = implode(",", $mentions);
                     $post->save();
                 }
 
@@ -240,15 +240,16 @@ class TwitterCrawl extends Command
                     $user_action->save();
                 }
 
+                // Mentions
                 if (isset($tweet['entities']['user_mentions'])) {
                     foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
                         if ($mention['screen_name'] != $tweet['in_reply_to_screen_name'] && in_array($mention['screen_name'], $handles_array)) {
 
                             $twitter_post = [];
 
-                            if (isset($tweet['quoted_status_id']) && is_null($tweet['quoted_status_id'])) {
+                            if (isset($tweet['quoted_status_id']) && !is_null($tweet['quoted_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
-                            } elseif (isset($tweet['in_reply_to_status_id'])  && is_null($tweet['in_reply_to_status_id'])) {
+                            } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
                                 continue;
@@ -265,6 +266,52 @@ class TwitterCrawl extends Command
                                 'twitter_post_id' => $twitter_post['id'],
                                 'action' => 'mention',
                                 'mention_handle_id' => TwitterHandle::findByTwitterHandle($mention['screen_name'])->id
+                            ]);
+
+                            $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
+                            $user_action->details = $tweet['screen_name'];
+                            $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
+                            $user_action->save();
+                        }
+                    }
+                }
+
+                // Hashtags
+                if (isset($tweet['entities']['hashtags'])) {
+                    foreach ($tweet['entities']['hashtags'] as $key => $hashtag) {
+
+                        $twitter_handle = [];
+
+                        if (isset($tweet['in_reply_to_screen_name']) && !is_null($tweet['in_reply_to_screen_name'])) {
+
+                            $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['in_reply_to_screen_name']);
+
+                        } elseif (isset($tweet['retweeted_status']['user']['screen_name'])  && !is_null($tweet['retweeted_status']['user']['screen_name'])) {
+
+                            $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['retweeted_status']['user']['screen_name']);
+
+                        } elseif (isset($tweet['quoted_status']['user']['screen_name'])  && !is_null($tweet['quoted_status']['user']['screen_name'])) {
+
+                            $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name']);
+
+                        } else {
+                            continue;
+                        }
+
+                        if (is_null($twitter_handle)) {
+                            continue;
+                        }
+                        $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle['id']);
+                        if (!is_null($hashtag)) {
+                                                        
+                            $user_action = UserTwitterAction::firstOrCreate([
+
+                                'twitter_user_id' => $handle->id,
+                                'action_id' => $tweet['id'],
+                                'twitter_post_id' => $twitter_post['id'],
+                                'action' => 'mention',
+                                'mention_handle_id' => $twitter_handle['id'],
+                                'hashtag_id' => $hashtag['id']
                             ]);
 
                             $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
