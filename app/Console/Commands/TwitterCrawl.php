@@ -310,7 +310,7 @@ class TwitterCrawl extends Command
                                 'twitter_user_id' => $handle->id,
                                 'action_id' => $tweet['id'],
                                 'twitter_post_id' => $twitter_post['id'],
-                                'action' => 'mention',
+                                'action' => 'hashtag',
                                 'mention_handle_id' => $twitter_handle['id'],
                                 'hashtag_id' => $hashtag['id']
                             ]);
