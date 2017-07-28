@@ -85,7 +85,7 @@ class TwitterHandleActivityController extends Controller
             ];
 
             $handleTweets = Twitter::getUserTimeline($param);
-            // return dd($handleTweets);
+            return dd($handleTweets);
             foreach ($handleTweets as $index => $tweet) {
                 var_dump($tweet['is_quote_status']);
                 var_dump($tweet);
