@@ -155,7 +155,7 @@ class TwitterCrawl extends Command
             foreach ($handleTweets as $index => $tweet) {
 
                 // Comment
-                if (!is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && in_array($tweet['in_reply_to_screen_name'], $handles_array)) {
+                if (!is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && isset($tweet['in_reply_to_screen_name']) && in_array($tweet['in_reply_to_screen_name'], $handles_array)) {
 
                     $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
 
@@ -183,8 +183,8 @@ class TwitterCrawl extends Command
                     $user_action->save();
 
                 } 
-                // Retweet
-                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && isset($tweet['quoted_status']['user']['screen_name']) && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
+                // Retweet with quotes
+                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && isset($tweet['quoted_status']['user']['screen_name']) && isset($tweet['quoted_status']['user']['screen_name']) && isset($tweet['quoted_status_id']) && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
                     
                     $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
 
@@ -207,6 +207,34 @@ class TwitterCrawl extends Command
                     }
                     
                     $user_action->action_parent_id = $tweet['quoted_status_id'];
+                    $user_action->details = $tweet['text'];
+                    $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
+                    $user_action->save();
+                }
+                // Retweet
+                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && isset($tweet['retweeted_status']) && isset($tweet['retweeted_status']['id'])  && isset($tweet['retweeted_status']['user']['screen_name']) && in_array($tweet['retweeted_status']['user']['screen_name'], $handles_array)) {
+                    
+                    $twitter_post = TwitterPost::getPost($tweet['retweeted_status']['id']);
+
+                    if (is_null($twitter_post)) {
+                        continue;
+                    }
+
+
+                    $user_action = UserTwitterAction::firstOrCreate([
+
+                        'twitter_user_id' => $handle->id,
+                        'action_id' => $tweet['id'],
+                        'twitter_post_id' => $twitter_post['id'],
+                        'action' => 'retweet',
+                        'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['retweeted_status']['user']['screen_name'])->id
+                    ]);
+
+                    if ($user_action->wasRecentlyCreated) {
+                        TwitterPost::updateData($twitter_post['id'], 'retweets');
+                    }
+                    
+                    $user_action->action_parent_id = $tweet['retweeted_status']['id'];
                     $user_action->details = $tweet['text'];
                     $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                     $user_action->save();
