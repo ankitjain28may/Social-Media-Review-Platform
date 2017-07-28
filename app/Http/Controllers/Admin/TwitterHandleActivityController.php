@@ -88,6 +88,7 @@ class TwitterHandleActivityController extends Controller
             // return dd($handleTweets);
             foreach ($handleTweets as $index => $tweet) {
                 var_dump($tweet['is_quote_status']);
+                var_dump($tweet);
                 // Comment
                 try {
                     if (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
