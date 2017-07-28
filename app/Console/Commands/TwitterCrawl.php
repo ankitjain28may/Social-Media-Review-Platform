@@ -242,7 +242,7 @@ class TwitterCrawl extends Command
                 }
 
                 // Mentions
-                if (isset($tweet['entities']['user_mentions'])) {
+                if (isset($tweet['entities']['user_mentions']) && !isset($tweet['retweeted_status'])) {
                     foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
 
                         if ($mention['screen_name'] == $tweet['in_reply_to_screen_name']) {
@@ -278,7 +278,7 @@ class TwitterCrawl extends Command
                 }
 
                 // Hashtags
-                if (isset($tweet['entities']['hashtags'])) {
+                if (isset($tweet['entities']['hashtags']) && !isset($tweet['retweeted_status'])) {
                     foreach ($tweet['entities']['hashtags'] as $key => $hashtag) {
 
                         $twitter_handle = [];

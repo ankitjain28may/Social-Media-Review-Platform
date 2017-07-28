@@ -13,7 +13,7 @@ class UserTwitterAction extends Model
      * @var array
      */
     protected $fillable = [
-        'twitter_user_id', 'twitter_post_id', 'action_id', 'action_parent_id', 'action', 'details', 'action_perform', 'mention_handle_id',
+        'twitter_user_id', 'twitter_post_id', 'action_id', 'action_parent_id', 'action', 'details', 'action_perform', 'mention_handle_id', 'hashtag_id',
     ];
 
     /**
