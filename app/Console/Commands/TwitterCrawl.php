@@ -253,7 +253,7 @@ class TwitterCrawl extends Command
                             } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
-                                continue;
+                                $twitter_post['id'] = null;
                             }
 
                             if (is_null($twitter_post)) {
@@ -302,8 +302,22 @@ class TwitterCrawl extends Command
                         if (is_null($twitter_handle)) {
                             continue;
                         }
-                        $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle['id']);
+                        $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle->id);
                         if (!is_null($hashtag)) {
+
+                            $twitter_post = [];
+
+                            if (isset($tweet['quoted_status_id']) && !is_null($tweet['quoted_status_id'])) {
+                                $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
+                            } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
+                                $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
+                            } else {
+                                $twitter_post['id'] = null; 
+                            }
+
+                            if (is_null($twitter_post)) {
+                                continue;
+                            }
                                                         
                             $user_action = UserTwitterAction::firstOrCreate([
 
@@ -311,7 +325,7 @@ class TwitterCrawl extends Command
                                 'action_id' => $tweet['id'],
                                 'twitter_post_id' => $twitter_post['id'],
                                 'action' => 'hashtag',
-                                'mention_handle_id' => $twitter_handle['id'],
+                                'mention_handle_id' => $twitter_handle->id,
                                 'hashtag_id' => $hashtag['id']
                             ]);
 
