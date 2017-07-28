@@ -89,6 +89,7 @@ class TwitterHandleActivityController extends Controller
             foreach ($handleTweets as $index => $tweet) {
 
                 // Comment
+                try {
                 if (!is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == false && in_array($tweet['in_reply_to_screen_name'], $handles_array)) {
 
                     $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
@@ -114,9 +115,7 @@ class TwitterHandleActivityController extends Controller
 
                 } 
                 // Retweet
-                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true) {
-
-                    return dd($tweet['quoted_status']['user']['screen_name']);
+                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
                     
                     $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
 
@@ -161,6 +160,11 @@ class TwitterHandleActivityController extends Controller
                             $user_action->save();
                         }
                     }
+                }
+
+                }
+                catch(Exception $e) {
+                    echo 'Message: ' .$e->getMessage();
                 }
             }
 
