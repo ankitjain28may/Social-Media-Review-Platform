@@ -180,7 +180,7 @@ class TwitterCrawl extends Command
 
                 } 
                 // Retweet
-                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
+                elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && isset($tweet['quoted_status']['user']['screen_name']) && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
                     
                     $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
 
