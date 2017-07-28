@@ -26,8 +26,8 @@ class CreateUserTwitterActions extends Migration
             $table->string('action_perform')->nullable();
             $table->foreign('twitter_user_id')->references('id')->on('twitter_user_handles')->onDelete('cascade');
             $table->foreign('twitter_post_id')->references('id')->on('twitter_posts')->onDelete('cascade');
-            $table->foreign('mention_handle_id')->references('id')->on('twitter_handle')->onDelete('cascade');
-            $table->foreign('hashtag_id')->references('id')->on('hashtag')->onDelete('cascade');
+            $table->foreign('mention_handle_id')->references('id')->on('twitter_handles')->onDelete('cascade');
+            $table->foreign('hashtag_id')->references('id')->on('hashtags')->onDelete('cascade');
             $table->timestamps();
         });
     }

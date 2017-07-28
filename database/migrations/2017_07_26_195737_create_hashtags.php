@@ -13,7 +13,7 @@ class CreateHashtag extends Migration
      */
     public function up()
     {
-        Schema::create('hashtag', function (Blueprint $table) {
+        Schema::create('hashtags', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('twitter_handle_id')->nullable();
             $table->string('name');
