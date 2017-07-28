@@ -228,6 +228,27 @@ class TwitterCrawl extends Command
                 }
             }
 
+            /*$handlefavourites = Twitter::getFavorites($param);
+
+            $handle->last_crawl = date('Y-m-d h:i:s', time());
+            if (isset($handleTweets[0]['user']['name'])) {
+                $handle->name = ucwords($handleTweets[0]['user']['name']);
+            }
+            $handle->save();
+
+            // return dd($handleTweets);
+
+            // Output
+            $this->count += 1;
+            $this->tweet += count($handleTweets);
+            $this->output->write("\r\r\t\t".' Collecting activity of Handle : ', false);
+            $this->info($handle->handle, false);
+
+            foreach ($handleTweets as $index => $tweet) {
+*/
+
+
+
         }
 
         if ($this->count == 0) {
