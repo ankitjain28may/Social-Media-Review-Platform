@@ -40,8 +40,8 @@
                             <td class="sorting_1"><a href="{{ url('handles/'.$handle['id'].'/activity') }}">{{ $handle['name'] }}</td>
                             <td class="center"><a href="http://twitter.com/{{ $handle['handle'] }}">{{ $handle['handle'] }}</a></td>
                             <td class="center">
-                              <a href="{{ url('handles/'.$handle['id'].'/edit') }}"><span><i class="fa fa-pencil-square-o fa-fw"></i></span></a>
-                              <a href="{{ url('handles/'.$handle['id'].'/delete') }}"><span><i class="fa fa-trash-o fa-fw"></i></span></a>
+                              <a href="{{ url('handles/'.$handle['id'].'/edit?type='.app('request')->input('type')) }}"><span><i class="fa fa-pencil-square-o fa-fw"></i></span></a>
+                              <a href="{{ url('handles/'.$handle['id'].'/delete?type='.app('request')->input('type')) }}""><span><i class="fa fa-trash-o fa-fw"></i></span></a>
                             </td>
                           </tr>
                         @endforeach @else

@@ -23,8 +23,17 @@ class HandleController extends Controller
      */
     public function index($limit = 25, $offset = 0)
     {
+        $type = Input::get('type');
 
-        $handles = TwitterHandle::where('flag', 1)->paginate(25);
+        if (isset($type) && $type == 'user') {
+            $handles = TwitterUsersHandle::where('flag', 1)->paginate(25);
+        } elseif (isset($type) && $type == 'main') {
+            $handles = TwitterHandle::where('flag', 1)->paginate(25);
+        } else {
+            Session::flash('message', 'Invalid Call');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
         return view('twitter.handles.show', compact('handles'));
 
     }
@@ -124,8 +133,20 @@ class HandleController extends Controller
      */
     public function edit($id)
     {
-        // return $id;
-        $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        
+        $type = Input::get('type');
+
+        if (isset($type) && $type == 'user') {
+            $handle = TwitterUsersHandle::where('id', $id)->where('flag', 1)->first();
+
+        } elseif (isset($type) && $type == 'main') {
+            $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        } else {
+            Session::flash('message', 'Invalid Call');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
+
         if (is_null($handle)) {
             Session::flash('message', 'Ooops!! Handle is not found');
             Session::flash('alert-class', 'alert-danger');
@@ -151,11 +172,23 @@ class HandleController extends Controller
             ]
         );
 
-        $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        $type = Input::get('type');
+
+        if (isset($type) && $type == 'user') {
+            $handle = TwitterUsersHandle::where('id', $id)->where('flag', 1)->first();
+
+        } elseif (isset($type) && $type == 'main') {
+            $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        } else {
+            Session::flash('message', 'Invalid Call');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
+
         if (is_null($handle)) {
             Session::flash('message', 'Ooops!! Handle is not found');
             Session::flash('alert-class', 'alert-danger');
-            return Redirect::to('/handles');
+            return Redirect::to('/handles?type='.$type);
         }
 
         $handle->handle = Input::get('handle');
@@ -164,7 +197,7 @@ class HandleController extends Controller
         Session::flash('message', 'Handle is updated successfully');
         Session::flash('alert-class', 'alert-success');
 
-        return Redirect::to('/handles');
+        return Redirect::to('/handles?type='.$type);
 
 
     }
@@ -177,7 +210,20 @@ class HandleController extends Controller
      */
     public function destroy($id)
     {
-        $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+
+        $type = Input::get('type');
+
+        if (isset($type) && $type == 'user') {
+            $handle = TwitterUsersHandle::where('id', $id)->where('flag', 1)->first();
+
+        } elseif (isset($type) && $type == 'main') {
+            $handle = TwitterHandle::where('id', $id)->where('flag', 1)->first();
+        } else {
+            Session::flash('message', 'Invalid Call');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
+
         if (is_null($handle)) {
             Session::flash('message', 'Ooops!! Handle is not found');
             Session::flash('alert-class', 'alert-danger');
@@ -189,7 +235,7 @@ class HandleController extends Controller
         Session::flash('message', 'Handle is deleted successfully');
         Session::flash('alert-class', 'alert-success');
 
-        return Redirect::to('/handles');
+        return Redirect::to('/handles?type='.$type);
 
 
     }

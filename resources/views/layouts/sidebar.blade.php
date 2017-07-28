@@ -22,7 +22,16 @@
                                                     <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{ url('/handles') }}"><i class="fa fa-dashboard fa-fw"></i> Handles</a>
+                                                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Handles</a>
+                                                        <ul class="nav nav-second-level">
+                                                            <li>
+                                                                <a href="{{ url('/handles?type=main') }}">Main Handles</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{{ url('/handles?type=user') }}">User Handles</a>
+                                                            </li>
+                                                            <li>
+                                                        </ul>
                                                 </li>
                                                 <li>
                                                     <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>

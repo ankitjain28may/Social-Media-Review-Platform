@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Edit the Handle name</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/handles/'.$handle['id']) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/handles/'.$handle['id'].'?type='.app('request')->input('type')) }}">
                     <input type="hidden" name="_method" value="put" />
                         {{ csrf_field() }}
 
