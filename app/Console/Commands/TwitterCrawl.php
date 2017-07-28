@@ -210,9 +210,9 @@ class TwitterCrawl extends Command
 
                             $twitter_post = [];
 
-                            if (isset($tweet['quoted_status_id'])) {
+                            if (isset($tweet['quoted_status_id']) && is_null($tweet['quoted_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
-                            } elseif (isset($tweet['in_reply_to_status_id'])) {
+                            } elseif (isset($tweet['in_reply_to_status_id'])  && is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
                                 continue;
