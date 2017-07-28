@@ -159,6 +159,10 @@ class TwitterCrawl extends Command
 
                     $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
 
+                    if (is_null($twitter_post)) {
+                        continue;
+                    }
+
 
                     $user_action = UserTwitterAction::firstOrCreate([
 
@@ -183,6 +187,10 @@ class TwitterCrawl extends Command
                 elseif (is_null($tweet['in_reply_to_screen_name']) && $tweet['is_quote_status'] == true && isset($tweet['quoted_status']['user']['screen_name']) && in_array($tweet['quoted_status']['user']['screen_name'], $handles_array)) {
                     
                     $twitter_post = TwitterPost::getPost($tweet['quoted_status_id']);
+
+                    if (is_null($twitter_post)) {
+                        continue;
+                    }
 
 
                     $user_action = UserTwitterAction::firstOrCreate([
@@ -215,6 +223,10 @@ class TwitterCrawl extends Command
                             } elseif (isset($tweet['in_reply_to_status_id'])  && is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
+                                continue;
+                            }
+
+                            if (is_null($twitter_post)) {
                                 continue;
                             }
                             
