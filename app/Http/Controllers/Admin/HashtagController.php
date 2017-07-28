@@ -9,6 +9,8 @@ use App\Models\TwitterHandle;
 use Session;
 use Auth;
 use Redirect;
+use Validator;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\Paginator;
 
 
@@ -46,7 +48,29 @@ class HashtagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            $request, [
+            'hashtag' => 'required',
+            'handle' => 'required|not_in:Select|not_in:select',
+            ]
+        );
+
+        $input = Input::all();
+
+        if (is_null(TwitterHandle::findById($input['handle']))) {
+            Session::flash('message', 'Ooops!! Handle is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+        $hashtag = new Hashtag;
+
+        $hashtag->name = $input['hashtag'];
+        $hashtag->twitter_handle_id = $input['handle'];
+
+        $hashtag->save();
+        Session::flash('message', 'Successfullt Added');
+        Session::flash('alert-class', 'alert-success');
+        return Redirect::to('/hashtags');
     }
 
     /**
@@ -76,7 +100,7 @@ class HashtagController extends Controller
             return Redirect::back();
         }
         $handles = TwitterHandle::getHandles();
-        
+
         return view('hashtag.edit', compact('hashtag', 'handles'));
     }
 
@@ -89,7 +113,32 @@ class HashtagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(
+            $request, [
+            'name' => 'required',
+            'handle' => 'required|not_in:Select|not_in:select',
+            ]
+        );
+
+        $hashtag = Hashtag::where('id', $id)->where('flag', 1)->first();
+
+        $input = Input::all();
+
+        if (is_null(TwitterHandle::findById($input['handle']))  || is_null($hashtag)) {
+            Session::flash('message', 'Ooops!! Invalid Handle or Hashtag');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+
+        $hashtag->name = $input['name'];
+        $hashtag->twitter_handle_id = $input['handle'];
+
+        $hashtag->save();
+        Session::flash('message', 'Successfullt Updated');
+        Session::flash('alert-class', 'alert-success');
+        return Redirect::to('/hashtags');
+
+
     }
 
     /**

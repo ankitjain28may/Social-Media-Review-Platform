@@ -36,4 +36,10 @@ class TwitterHandle extends Model
         $user = Self::where('handle', $handle)->where('flag', 1)->first();
         return $user;
     }
+
+    public static function findById($id)
+    {
+        $user = Self::where('id', $id)->where('flag', 1)->first();
+        return $user;
+    }
 }
