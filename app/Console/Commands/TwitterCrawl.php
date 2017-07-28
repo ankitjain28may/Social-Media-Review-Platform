@@ -8,6 +8,7 @@ use App\Models\TwitterHandle;
 use App\Models\TwitterPost;
 use App\Models\TwitterUsersHandle;
 use App\Models\UserTwitterAction;
+use App\Models\Hashtag;
 
 class TwitterCrawl extends Command
 {
