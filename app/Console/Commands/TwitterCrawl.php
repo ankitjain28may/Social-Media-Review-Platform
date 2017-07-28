@@ -258,7 +258,7 @@ class TwitterCrawl extends Command
                             } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
-                                $twitter_post['id'] = null;
+                                $twitter_post['id'] = NULL;
                             }
                             
                             $user_action = UserTwitterAction::firstOrCreate([
@@ -292,7 +292,7 @@ class TwitterCrawl extends Command
                             $twitter_handle = TwitterHandle::findByTwitterHandle($tweet['quoted_status']['user']['screen_name']);
 
                         } else {
-                            $twitter_handle['id'] = 0;
+                            $twitter_handle['id'] = NULL;
                         }
 
                         $hashtag = Hashtag::getHashtag($hashtag['text'], $twitter_handle['id']);
@@ -305,7 +305,7 @@ class TwitterCrawl extends Command
                             } elseif (isset($tweet['in_reply_to_status_id'])  && !is_null($tweet['in_reply_to_status_id'])) {
                                 $twitter_post = TwitterPost::getPost($tweet['in_reply_to_status_id']);
                             } else {
-                                $twitter_post['id'] = null;
+                                $twitter_post['id'] = NULL;
                             }
                                                         
                             $user_action = UserTwitterAction::firstOrCreate([
