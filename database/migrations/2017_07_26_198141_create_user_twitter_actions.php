@@ -16,7 +16,7 @@ class CreateUserTwitterActions extends Migration
         Schema::create('twitter_user_actions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('twitter_user_id');
-            $table->unsignedInteger('twitter_post_id');
+            $table->unsignedInteger('twitter_post_id')->nullable();
             $table->string('action_id')->nullable();
             $table->string('action_parent_id')->default(0);
             $table->enum('action', ['favourite', 'comment', 'retweet', 'hashtag', 'mention']);

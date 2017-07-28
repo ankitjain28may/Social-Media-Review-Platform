@@ -269,7 +269,6 @@ class TwitterCrawl extends Command
                                 'mention_handle_id' => TwitterHandle::findByTwitterHandle($mention['screen_name'])->id
                             ]);
 
-                            $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
                             $user_action->details = $tweet['screen_name'];
                             $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                             $user_action->save();
@@ -329,7 +328,6 @@ class TwitterCrawl extends Command
                                 'hashtag_id' => $hashtag['id']
                             ]);
 
-                            $user_action->action_parent_id =  $tweet['in_reply_to_status_id'] || $tweet['quoted_status_id'];
                             $user_action->details = $tweet['screen_name'];
                             $user_action->action_perform = date('Y-m-d h:i:s', strtotime($tweet['created_at']));
                             $user_action->save();
