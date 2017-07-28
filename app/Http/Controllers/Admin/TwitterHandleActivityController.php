@@ -85,7 +85,7 @@ class TwitterHandleActivityController extends Controller
             ];
 
             $handleTweets = Twitter::getUserTimeline($param);
-            return dd($handleTweets);
+            // return dd($handleTweets);
             foreach ($handleTweets as $index => $tweet) {
 
                 // Comment
