@@ -27,7 +27,7 @@ class ActivityController extends Controller
         $filter = [];
 
         if (isset($input['action']) && $input['action'] != "None") {
-            $filter['action'] = $input['action'];
+            $filter['activity'] = $input['action'];
         }
 
         if (isset($input['end_date'])) {
