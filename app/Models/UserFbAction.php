@@ -39,6 +39,16 @@ class UserFbAction extends Model
         if (isset($filter['user_id'])) {
             $query->where('user_id', $filter['user_id']);
         }
+
+        if (isset($filter['start_date'])) {
+            $query->whereDate('action_perform', '>=', $filter['start_date']);
+        }
+
+        if (isset($filter['end_date'])) {
+            $query->whereDate('action_perform', '<=', $filter['end_date']);
+        }
+
+
         $query->join('users', 'users.id', 'user_fb_actions.user_id');
         $query->select('user_fb_actions.id as user_fb_action_id', 'user_fb_actions.action', 'user_fb_actions.details', 'user_fb_actions.action_perform', 'user_fb_actions.post_id', 'users.id', 'users.name', 'users.email', 'users.avatar');
         $query->orderBy('action_perform', 'desc');

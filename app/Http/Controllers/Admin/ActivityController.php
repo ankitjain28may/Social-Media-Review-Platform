@@ -11,6 +11,7 @@ use App\Models\Post;
 use Session;
 use Auth;
 use Redirect;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\Paginator;
 
 class ActivityController extends Controller
@@ -22,6 +23,29 @@ class ActivityController extends Controller
      */
     public function index($post_id)
     {
+        $input = Input::all();
+        $filter = [];
+
+        if (isset($input['action']) && $input['action'] != "None") {
+            $filter['action'] = $input['action'];
+        }
+
+        if (isset($input['end_date'])) {
+            $input['end_date'] = implode("-", explode("/", $input['end_date']));
+            $filter['end_date'] = date("Y-m-d", strtotime($input['end_date']));
+        }
+
+        if (isset($input['start_date'])) {
+            $input['start_date'] = implode("-", explode("/", $input['start_date']));
+            $filter['start_date'] = date("Y-m-d", strtotime($input['start_date']));
+        }
+
+        // if (isset($input['start_date']) && isset($input['end_date']) && strtotime($input['end_date']) < strtotime($input['start_date'])) {
+        //     Session::flash('message', 'Ooops!! Invalid Date-Time Range selected');
+        //     Session::flash('alert-class', 'alert-info');
+        //     return Redirect::back();
+        // }
+
         $post = Post::getPostById($post_id);
         if (is_null($post)) {
             Session::flash('message', 'Ooops!! Invalid Post');
@@ -29,7 +53,7 @@ class ActivityController extends Controller
             return Redirect::back();
         }
 
-        $users = UserFbAction::getActivity($post_id);
+        $users = UserFbAction::getActivity($post_id, $filter);
         return view('userActions.fb.show', compact('users'));
     }
 

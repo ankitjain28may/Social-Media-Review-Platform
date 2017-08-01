@@ -82,8 +82,14 @@
     <script src="{{ asset('startbootstrap-sb-admin-2/dist/js/sb-admin-2.min.js') }}"></script>
 
     <script type="text/javascript">
-        $('.datepicker').datepicker();
-        $('#dp1').datepicker('show');
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayBtn: true,
+                todayHighlight: true
+            });
+        });
     </script>
 
     @yield('script')
