@@ -30,6 +30,7 @@
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Comments</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Shares</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Created Time</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Explore</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,7 @@
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-comments') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-shares') }}">{{ $post['internal_shares']."/".$post['shares'] }}</a></td>
                             <td class="center">{{ $post['created_time'] }}</td>
+                            <td class="center"><a href="{{ $post['link'] }}" target="_blank"><i class="fa fa-globe fa-fw"></i></a></td>
                           </tr>
                         @endforeach @else
                       <tr class="gradeA odd" role="row">

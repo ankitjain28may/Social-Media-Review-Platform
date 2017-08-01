@@ -57,13 +57,16 @@ class FbCrawl extends Command
         $pages = [];
 
         $allUsers = FbUser::where('flag', 1)->get();
+        
         foreach ($allUsers as $index => $allUser) {
+
             
-            $id = $allUser->id;
+            $id = $allUser->user_id;
             $access_token = $allUser->access_token;
         
             $pages = Page::where('user_id', $id)->where('flag', 1)->get();
 
+            // $this->output->write(var_dump($id), false);
             $time = date(time());
             $since = $time - $this->fourWeek;
 
@@ -86,7 +89,6 @@ class FbCrawl extends Command
                     $after = isset($post_s['paging']['cursors']['after']) ? $post_s['paging']['cursors']['after'] : '';
 
                     $data = $post_s['data'];
-                    // return dd($data);
                     $users = User::getUsers();
 
                     foreach ($data as $index => $post_data) {

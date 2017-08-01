@@ -23,8 +23,25 @@ class PostUserController extends Controller
      */
     public function index($post_id, $activity)
     {
-        return $activity;
-        $users = UserFbAction::getActivity($post_id);
+
+        $post = Post::getPostById($post_id);
+        if (is_null($post)) {
+            Session::flash('message', 'Ooops!! Invalid Post');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+        
+        if ($activity != "likes" && $activity != "comments" && $activity != "shares") {
+            Session::flash('message', 'Ooops!! Invalid Activity');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+
+        $activity = substr($activity, 0, strlen($activity)-1);
+        // return dd($activity);
+
+        $users = UserFbAction::getActivity($post_id, ['activity' => $activity]);
+        return view('userActions.fb.show', compact('users'));
     }
 
     /**

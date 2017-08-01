@@ -4,6 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\FbUser;
+use App\Models\UserFbAction;
+use App\Models\Page;
+use App\Models\Post;
+use Session;
+use Auth;
+use Redirect;
+use Illuminate\Pagination\Paginator;
 
 class ActivityController extends Controller
 {
@@ -12,9 +20,17 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($post_id)
     {
-        //
+        $post = Post::getPostById($post_id);
+        if (is_null($post)) {
+            Session::flash('message', 'Ooops!! Invalid Post');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+
+        $users = UserFbAction::getActivity($post_id);
+        return view('userActions.fb.show', compact('users'));
     }
 
     /**
@@ -44,9 +60,17 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($post_id, $id)
     {
-        //
+        $post = Post::getPostById($post_id);
+        if (is_null($post)) {
+            Session::flash('message', 'Ooops!! Invalid Post');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+
+        $users = UserFbAction::getActivity($post_id, ['user_id' => $id]);
+        return view('userActions.fb.show', compact('users'));
     }
 
     /**

@@ -36,6 +36,9 @@
         .center {
             text-align: center;
         }
+        a:hover {
+            text-decoration: none;
+        }
         @yield('style')
     </style>
 

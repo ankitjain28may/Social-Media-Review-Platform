@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('page_id');
             $table->string('fb_post_id');
-            $table->string('post_name')->nullable();
+            $table->string('post_name')->default('Post');
             $table->text('post_message')->nullable();
             $table->text('link')->nullable();
             $table->text('media')->nullable();

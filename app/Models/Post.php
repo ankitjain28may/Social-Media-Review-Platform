@@ -196,4 +196,15 @@ class Post extends Model
     }
 
 
+    public static function getPostById($post_id)
+    {
+        $query = Self::where('id', $post_id);
+        $query->where('flag', 1);
+
+        $post = $query->first();
+
+        return $post;
+    }
+
+
 }
