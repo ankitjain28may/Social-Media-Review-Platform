@@ -94,9 +94,9 @@
               <label>Action type</label>
               <select class="form-control" name="action">
                 <option>None</option>
-                <option value="likes">Likes</option>
-                <option value="comments">Comments</option>
-                <option value="shares">Shares</option>
+                <option value="like">Likes</option>
+                <option value="comment">Comments</option>
+                <option value="share">Shares</option>
               </select>
             </div>
             <div class="row">
