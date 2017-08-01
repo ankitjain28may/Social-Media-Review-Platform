@@ -25,6 +25,9 @@
     <!-- Morris Charts CSS -->
     <link href="{{ asset('startbootstrap-sb-admin-2/vendor/morrisjs/morris.css') }}" rel="stylesheet">
 
+    <!-- DatePicker -->
+    <link href="{{ asset('datepicker/css/datepicker.css') }}" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="{{ asset('startbootstrap-sb-admin-2/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -38,6 +41,9 @@
         }
         a:hover {
             text-decoration: none;
+        }
+        .datepicker {
+            z-index: 1051;
         }
         @yield('style')
     </style>
@@ -69,8 +75,16 @@
     <script src="{{ asset('startbootstrap-sb-admin-2/vendor/morrisjs/morris.min.js') }}"></script>
     <script src="{{ asset('startbootstrap-sb-admin-2/data/morris-data.js') }}"></script>
 
+    <!-- Datepicker -->
+    <script src="{{ asset('datepicker/js/datepicker.js') }}"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="{{ asset('startbootstrap-sb-admin-2/dist/js/sb-admin-2.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker();
+        $('#dp1').datepicker('show');
+    </script>
 
     @yield('script')
 </body>

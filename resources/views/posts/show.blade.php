@@ -44,7 +44,7 @@
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-likes') }}">{{ $post['internal_likes']."/".$post['likes'] }}</a></td>
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-comments') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/users-shares') }}">{{ $post['internal_shares']."/".$post['shares'] }}</a></td>
-                            <td class="center">{{ $post['created_time'] }}</td>
+                            <td class="center">{{ date("d M Y h:i:s A" , strtotime($post['created_time'])) }}</td>
                             <td class="center"><a href="{{ $post['link'] }}" target="_blank"><i class="fa fa-globe fa-fw"></i></a></td>
                           </tr>
                         @endforeach @else

@@ -11,9 +11,9 @@
               <div class="col-sm-6">
                 Users
               </div>
-              <!-- <div class="col-sm-6">
-                <a href= "{{ url('/pages/create') }}"><button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Add More Pages</button></a>
-              </div> -->
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Filter</button>
+              </div>
             </div>
           </div>
           <!-- /.panel-heading -->
@@ -43,7 +43,7 @@
                             <td class="center">{{ $user->action }}</td>
                             <td class="center">{{ $user->details }}</td>
                             @if(!is_null($user->action_perform))
-                              <td class="center">{{ date("d M Y h:i:s" , strtotime($user->action_perform)) }}</td>
+                              <td class="center">{{ date("d M Y h:i:s A" , strtotime($user->action_perform)) }}</td>
                             @else
                               <td class="center">NULL</td>
                             @endif
@@ -77,5 +77,53 @@
     </div>
     <!-- /.col-lg-12 -->
   </div>
+</div>
+
+<div class="panel-body">                            
+  <!-- Modal -->
+  <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="GET">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Action type</label>
+              <select class="form-control" name="action">
+                <option>None</option>
+                <option value="likes">Likes</option>
+                <option value="comments">Comments</option>
+                <option value="shares">Shares</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>Start Date</label>
+                  <input class="form-control datepicker" type="text" name="start_date">
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label>End Date</label>
+                  <input class="form-control datepicker" type="text" name="end_date">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 </div>
 @endsection
