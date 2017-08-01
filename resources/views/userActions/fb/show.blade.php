@@ -42,7 +42,11 @@
                             <td class="center" >{{ $user->email }}</td>
                             <td class="center">{{ $user->action }}</td>
                             <td class="center">{{ $user->details }}</td>
-                            <td class="center">{{ date("d M Y h:i:s" , strtotime($user->action_perform)) }}</td>
+                            @if(!is_null($user->action_perform))
+                              <td class="center">{{ date("d M Y h:i:s" , strtotime($user->action_perform)) }}</td>
+                            @else
+                              <td class="center">NULL</td>
+                            @endif
                           </tr>
                         @endforeach 
                       @else

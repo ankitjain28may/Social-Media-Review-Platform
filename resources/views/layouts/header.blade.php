@@ -18,7 +18,12 @@
         <!-- /.dropdown -->
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
+                @if(is_null(Auth::user()->avatar))
+                    <i class="fa fa-user fa-fw"></i> {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
+                @else
+                    <img src="{{ Auth::user()->avatar }}" width="30" height="30">&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
+                @endif
+
             </a>
             <ul class="dropdown-menu dropdown-user">
                 <li>
