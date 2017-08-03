@@ -7,12 +7,54 @@
     <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-heading">
-            <div class="row">
-              <div class="col-sm-6">
-                Users
-              </div>
-              <div class="col-sm-6">
-                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Filter</button>
+          <div class="row">
+            <div class="col-sm-6">
+              Users
+            </div>
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">Filter</button>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel-group" id="accordion">
+                <div>
+                  <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                    <div class="panel-body">
+                      <form method="GET">
+                        <div class="form-group">
+                          <label>Action type</label>
+                          <select class="form-control" name="action">
+                            <option>None</option>
+                            <option value="like" @if(isset($_GET['action']) && $_GET['action'] == "like") {{ "selected" }} @endif >Likes</option>
+                            <option value="comment" @if(isset($_GET['action']) && $_GET['action'] == "comment") {{ "selected" }} @endif >Comments</option>
+                            <option value="share" @if(isset($_GET['action']) && $_GET['action'] == "share") {{ "selected" }} @endif >Shares</option>
+                          </select>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>Start Date</label>
+                              <input class="form-control datepicker" type="text" name="start_date" @if(isset($_GET['start_date'])) value="{{ $_GET['start_date'] }}" @endif>
+                            </div>
+                          </div>
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>End Date</label>
+                              <input class="form-control datepicker" type="text" name="end_date" @if(isset($_GET['start_date'])) value="{{ $_GET['end_date'] }}" @endif>
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <div class="form-group">
+                              <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -83,43 +125,7 @@
   <!-- Modal -->
   <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <form method="GET">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Action type</label>
-              <select class="form-control" name="action">
-                <option>None</option>
-                <option value="like">Likes</option>
-                <option value="comment">Comments</option>
-                <option value="share">Shares</option>
-              </select>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label>Start Date</label>
-                  <input class="form-control datepicker" type="text" name="start_date">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label>End Date</label>
-                  <input class="form-control datepicker" type="text" name="end_date">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </form>
+      
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
