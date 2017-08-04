@@ -31,10 +31,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 	Route::resource('/pages', 'PageController');
 	Route::resource('/pages.posts', 'PostController');
 	Route::resource('/posts.activity', 'ActivityController');
-	Route::get('/posts/{post_id}/users-{activity?}', 'PostUserController@index');
-	Route::resource('/report', 'ReportingController');
-	Route::resource('/twitter-posts', 'TwitterHandleActivityController');
+	// Route::resource('/twitter-posts', 'TwitterHandleActivityController');
 	Route::resource('/handles', 'HandleController');
+	Route::resource('/handles.posts', 'HandlePostController');
+	Route::resource('/handles.activity', 'HandleActivityController');
 	Route::resource('/hashtags', 'HashtagController');
 	Route::get('/handles/{id}/delete', 'HandleController@destroy');
 	Route::get('/hashtags/{id}/delete', 'HashtagController@destroy');

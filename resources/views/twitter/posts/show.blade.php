@@ -26,6 +26,8 @@
                       <tr role="row">
                         <th class="sorting_asc center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Post Name</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Post Message</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Mentions</th>
+                        <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Hashtags</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Likes</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Comments</th>
                         <th class="sorting center" tabindex="0" aria-controls="dataTables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" >Shares</th>
@@ -38,12 +40,27 @@
                       @if(count($posts)) 
                         @foreach($posts as $index => $post)
                           <tr class="gradeA odd" role="row">
-                            <td class="sorting_1"><a href="{{ url('posts/'.$post['id'].'/activity') }}">{{ $post['post_name'] }}</td>
-                            <!-- <td>{{ $post['fb_post_id'] }}</td> -->
-                            <td >{{ (strlen($post['post_message']) > 10) ? substr($post['post_message'],0, 10).'...' : $post['post_message'] }}</td>
-                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=like') }}">{{ $post['internal_likes']."/".$post['likes'] }}</a></td>
+                            <td class="sorting_1">
+                              <a href="{{ url('posts/'.$post['id'].'/activity') }}">
+                                {{ $post['twitter_id'] }}
+                              </a>
+                            </td>
+                            <td >
+                              {{ (strlen($post['post_message']) > 10) ? substr($post['post_message'],0, 10).'...' : $post['post_message'] }}
+                            </td>
+                            <td >
+                              {{ $post['mentions'] }}
+                            </td>
+                            <td>
+                              {{ $post['hashtags'] }}
+                            </td>
+                            <td class="center">
+                              <a href="{{ url('posts/'.$post['id'].'/activity?action=like') }}">
+                                {{ $post['internal_favourites']."/".$post['favourites'] }}
+                              </a>
+                            </td>
                             <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=comment') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
-                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=share') }}">{{ $post['internal_shares']."/".$post['shares'] }}</a></td>
+                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=share') }}">{{ $post['internal_retweets']."/".$post['retweets'] }}</a></td>
                             <td class="center">{{ date("d M Y h:i:s A" , strtotime($post['created_time'])) }}</td>
                             <td class="center"><a href="{{ $post['link'] }}" target="_blank"><i class="fa fa-globe fa-fw"></i></a></td>
                           </tr>

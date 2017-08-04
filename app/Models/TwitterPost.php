@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
 
 class TwitterPost extends Model
 {
@@ -30,6 +31,15 @@ class TwitterPost extends Model
         $post = $query->first();
 
         return $post;
+    }
+
+    public static function getPosts($handle_id) {
+        $query = Self::where('twitter_handle_id', $handle_id);
+        $query->where('flag', 1);
+
+        $posts = $query->paginate(25);
+
+        return $posts;
     }
 
     public static function updateData($id, $action)

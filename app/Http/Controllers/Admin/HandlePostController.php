@@ -4,44 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
-use App\Models\FbUser;
-use App\Models\UserFbAction;
-use App\Models\Page;
-use App\Models\Post;
 use Session;
 use Auth;
+use Excel;
 use Redirect;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Input;
+use App\Models\TwitterHandle;
+use App\Models\TwitterPost;
+use App\Models\TwitterUsersHandle;
+use Validator;
 
-class PostUserController extends Controller
+class HandlePostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($post_id, $activity)
+    public function index($handle_id)
     {
-
-        $post = Post::getPostById($post_id);
-        if (is_null($post)) {
-            Session::flash('message', 'Ooops!! Invalid Post');
-            Session::flash('alert-class', 'alert-info');
-            return Redirect::back();
-        }
-        
-        if ($activity != "likes" && $activity != "comments" && $activity != "shares") {
-            Session::flash('message', 'Ooops!! Invalid Activity');
-            Session::flash('alert-class', 'alert-info');
+        $handle = TwitterHandle::findById($handle_id);
+        if (is_null($handle)) {
+            Session::flash('message', 'User Handle is not found');
+            Session::flash('alert-class', 'alert-warning');
             return Redirect::back();
         }
 
-        $activity = substr($activity, 0, strlen($activity)-1);
-        // return dd($activity);
-
-        $users = UserFbAction::getActivity($post_id, ['activity' => $activity]);
-        return view('userActions.fb.show', compact('users'));
+        $posts = TwitterPost::getPosts($handle_id);
+        // return dd($posts);
+        return view('twitter.posts.show', compact('posts'));
     }
 
     /**
@@ -71,7 +63,7 @@ class PostUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($post_id, $activity, $id)
+    public function show($id)
     {
         //
     }

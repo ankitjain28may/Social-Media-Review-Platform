@@ -19,25 +19,22 @@
                                                 <li><a href="{{ route('register') }}"> <i class="fa fa-edit fa-fw"></i> Register New Page Admin</a></li>
 
                                                 <li>
-                                                    <a href="{{ url('/pages') }}"><i class="fa fa-dashboard fa-fw"></i> My Pages</a>
+                                                    <a href="{{ url('/pages') }}"><i class="fa fa-files-o fa-fw"></i> My Pages</a>
                                                 </li> 
                                                 <li>
-                                                    <a href="{{ url('/hashtags') }}"><i class="fa fa-dashboard fa-fw"></i> Hashtags </a>
+                                                    <a href="{{ url('/hashtags') }}"><i class="fa fa-tags fa-fw"></i> Hashtags </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fa fa-dashboard fa-fw"></i> Handles</a>
+                                                    <a href="#"><i class="fa fa-users fa-fw"></i> Handles</a>
                                                         <ul class="nav nav-second-level">
                                                             <li>
-                                                                <a href="{{ url('/handles?type=main') }}">Main Handles</a>
+                                                                <a href="{{ url('/handles?type=main') }}"><i class="glyphicon glyphicon-user fa-fw"></i>Main Handles</a>
                                                             </li>
                                                             <li>
-                                                                <a href="{{ url('/handles?type=user') }}">User Handles</a>
+                                                                <a href="{{ url('/handles?type=user') }}"><i class="fa fa-user fa-fw"></i>User Handles</a>
                                                             </li>
                                                             <li>
                                                         </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ url('/report') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Report</a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ url('/login/1/facebook') }}">

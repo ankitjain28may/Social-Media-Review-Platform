@@ -37,7 +37,15 @@
                       @if(count($handles)) 
                         @foreach($handles as $index => $handle)
                           <tr class="gradeA odd" role="row">
-                            <td class="sorting_1"><a href="{{ url('handles/'.$handle['id'].'/activity') }}">{{ $handle['name'] }}</td>
+                            @if(app('request')->input('type') == "user")
+                              <td class="sorting_1">
+                                <a href="{{ url('handles/'.$handle['id'].'/activity') }}">{{ $handle['name'] }}</a>
+                              </td>
+                            @else
+                              <td class="sorting_1">
+                                <a href="{{ url('handles/'.$handle['id'].'/posts') }}">{{ $handle['name'] }}</a>
+                              </td>
+                            @endif
                             <td class="center"><a href="http://twitter.com/{{ $handle['handle'] }}">{{ $handle['handle'] }}</a></td>
                             <td class="center">
                               <a href="{{ url('handles/'.$handle['id'].'/edit?type='.app('request')->input('type')) }}"><span><i class="fa fa-pencil-square-o fa-fw"></i></span></a>
