@@ -330,6 +330,7 @@ class TwitterCrawl extends Command
             $handlefavourites = Twitter::getFavorites($param);
 
             foreach ($handleTweets as $index => $tweet) {
+            	$this->info(var_dump($tweet['id']));
 
             	$twitter_post = TwitterPost::getPost($tweet['id']);
             	$this->info(var_dump($twitter_post));
