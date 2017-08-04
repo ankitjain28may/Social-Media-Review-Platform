@@ -105,14 +105,14 @@ class TwitterCrawl extends Command
                     $hashtags = [];
                     if (isset($tweet['entities']['hashtags'])) {
                         foreach ($tweet['entities']['hashtags'] as $key => $hashtag) {
-                            $hashtags[] = $hashtag['text']." ,";
+                            $hashtags[] = $hashtag['text'];
                         }
                     }
                     $post->hashtags = implode(",", $hashtags);
                     $mentions = [];
                     if (isset($tweet['entities']['user_mentions'])) {
                         foreach ($tweet['entities']['user_mentions'] as $key => $mention) {
-                            $mentions[] = $mention['screen_name']." ,";
+                            $mentions[] = $mention['screen_name'];
                         }
                     }
                     $post->mentions = implode(",", $mentions);
