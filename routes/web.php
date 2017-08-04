@@ -31,7 +31,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 	Route::resource('/pages', 'PageController');
 	Route::resource('/pages.posts', 'PostController');
 	Route::resource('/posts.activity', 'ActivityController');
-	// Route::resource('/twitter-posts', 'TwitterHandleActivityController');
+	Route::resource('/twitter-posts', 'TwitterHandleActivityController');
 	Route::resource('/handles', 'HandleController');
 	Route::resource('/handles.posts', 'HandlePostController');
 	Route::resource('/handles.activity', 'HandleActivityController');

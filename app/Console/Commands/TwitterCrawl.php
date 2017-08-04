@@ -326,24 +326,30 @@ class TwitterCrawl extends Command
                 }
             }
 
-            /*$handlefavourites = Twitter::getFavorites($param);
-
-            $handle->last_crawl = date('Y-m-d h:i:s', time());
-            if (isset($handleTweets[0]['user']['name'])) {
-                $handle->name = ucwords($handleTweets[0]['user']['name']);
-            }
-            $handle->save();
-
-            // return dd($handleTweets);
-
-            // Output
-            $this->count += 1;
-            $this->tweet += count($handleTweets);
-            $this->output->write("\r\r\t\t".' Collecting activity of Handle : ', false);
-            $this->info($handle->handle, false);
+            // Favourites
+            $handlefavourites = Twitter::getFavorites($param);
 
             foreach ($handleTweets as $index => $tweet) {
-*/
+
+            	$twitter_post = TwitterPost::getPost($tweet['id']);
+
+                if (is_null($twitter_post)) {
+                    continue;
+                }
+
+            	$user_action = UserTwitterAction::firstOrCreate([
+
+                    'twitter_user_id' => $handle->id,
+                    'twitter_post_id' => $twitter_post['id'],
+                    'action' => 'favourite',
+                    'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['user']['screen_name'])->id,
+                    'action_parent_id' => $tweet['id']
+                ]);
+
+                if ($user_action->wasRecentlyCreated) {
+                    TwitterPost::updateData($twitter_post['id'], 'favourites');
+                }
+            }
 
 
 
