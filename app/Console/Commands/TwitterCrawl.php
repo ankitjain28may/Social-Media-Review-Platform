@@ -330,9 +330,8 @@ class TwitterCrawl extends Command
             $handlefavourites = Twitter::getFavorites($param);
 
             foreach ($handleTweets as $index => $tweet) {
-            	$this->info(var_dump($tweet['id']));
 
-            	$twitter_post = TwitterPost::getPost($tweet['id']);
+            	$twitter_post = TwitterPost::getPost($tweet['id_str']);
             	$this->info(var_dump($twitter_post));
 
                 if (is_null($twitter_post)) {
@@ -345,7 +344,7 @@ class TwitterCrawl extends Command
                     'twitter_post_id' => $twitter_post['id'],
                     'action' => 'favourite',
                     'mention_handle_id' => TwitterHandle::findByTwitterHandle($tweet['user']['screen_name'])->id,
-                    'action_parent_id' => $tweet['id']
+                    'action_parent_id' => (int) $tweet['id_str']
                 ]);
 
                 if ($user_action->wasRecentlyCreated) {
