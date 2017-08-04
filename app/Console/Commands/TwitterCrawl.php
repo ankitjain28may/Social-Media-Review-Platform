@@ -332,6 +332,7 @@ class TwitterCrawl extends Command
             foreach ($handleTweets as $index => $tweet) {
 
             	$twitter_post = TwitterPost::getPost($tweet['id']);
+            	$this->info(var_dump($twitter_post));
 
                 if (is_null($twitter_post)) {
                     continue;
