@@ -46,4 +46,4 @@ Route::group(['namespace' => 'Twitter', 'middleware' => ['auth', 'admin']], func
 
 Route::get('{any}', function() {
 	return view('layouts.error');
-})
+});

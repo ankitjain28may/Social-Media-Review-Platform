@@ -266,11 +266,11 @@
     <div class="cloud x5"></div>
   </div>
   <div class='c'>
-    <div class='_404'>404</div>
+    <div class='_404'>Oops</div>
     <hr>
-    <div class='_1'>THE PAGE</div>
-    <div class='_2'>WAS NOT FOUND</div>
-    <a class='btn' href='http://redjedi.surge.sh'>BACK TO MARS</a>
+    <div class='_1'>ERROR HAS OCCURED</div>
+    <div class='_2'>Check the logs</div>
+    <a class='btn' href="{{ url('/') }}">BACK TO MARS</a>
   </div>
 </body>
 
