@@ -60,4 +60,25 @@ class UserTwitterAction extends Model
         return $users;
 
     }
+
+    public static function getHastagActivity($id, $filter = [])
+    {
+        $query = DB::table('twitter_user_actions');
+
+        if (isset($filter['start_date'])) {
+            $query->whereDate('action_perform', '>=', $filter['start_date']);
+        }
+
+        if (isset($filter['end_date'])) {
+            $query->whereDate('action_perform', '<=', $filter['end_date']);
+        }
+
+        $query->where('hashtag_id', $id);
+        $query->join('twitter_user_handles', 'twitter_user_handles.id', 'twitter_user_actions.twitter_user_id');
+        $query->select('twitter_user_actions.id as user_twitter_action_id', 'twitter_user_actions.action', 'twitter_user_actions.details', 'twitter_user_actions.action_perform', 'twitter_user_actions.twitter_post_id as post_id', 'twitter_user_handles.id', 'twitter_user_handles.name', 'twitter_user_handles.handle');
+        $query->orderBy('action_perform', 'desc');
+        $users = $query->paginate(25);
+
+        return $users;
+    }
 }

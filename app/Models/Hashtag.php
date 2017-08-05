@@ -40,14 +40,22 @@ class Hashtag extends Model
         return $hashtag;
     }
 
-    public static function getHashtags()
+    public static function getHashtags($id = null)
     {
+        $hashtags = [];
+
         $query = DB::table('hashtags');
         $query->where('hashtags.flag', 1);
         $query->join('twitter_handles', 'hashtags.twitter_handle_id', 'twitter_handles.id');
         $query->select('hashtags.*', 'twitter_handles.handle', 'twitter_handles.name as handle_name');
 
-        $hashtags = $query->paginate(25);
+        if (!is_null($id)) {
+            $query->where('hashtags.id', $id);
+            $hashtags = $query->first();
+        } else {
+            $hashtags = $query->paginate(25);
+            
+        }
 
         return $hashtags;
     }

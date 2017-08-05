@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Facebook;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,8 +23,8 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::where('user_id', Auth::id())->where('flag', 1)->get();
-        return view('pages.show', compact('pages'));
+        $pages = Page::where('user_id', Auth::id())->where('flag', 1)->paginate(25);
+        return view('facebook.pages.show', compact('pages'));
     }
 
     /**
@@ -53,7 +53,7 @@ class PageController extends Controller
             Session::flash('message', 'Ooops!! Pages are not found');
             Session::flash('alert-class', 'alert-danger');
         }
-        return view('pages.add', compact('pages'));
+        return view('facebook.pages.add', compact('pages'));
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Facebook;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -54,7 +54,7 @@ class ActivityController extends Controller
         }
 
         $users = UserFbAction::getActivity($post_id, $filter);
-        return view('userActions.fb.show', compact('users'));
+        return view('facebook.activity.show', compact('users'));
     }
 
     /**
@@ -119,7 +119,7 @@ class ActivityController extends Controller
         $filter['user_id'] = $id;
 
         $users = UserFbAction::getActivity($post_id, $filter);
-        return view('userActions.fb.show', compact('users'));
+        return view('facebook.activity.show', compact('users'));
     }
 
     /**

@@ -349,6 +349,9 @@ class TwitterCrawl extends Command
                 if ($user_action->wasRecentlyCreated) {
                     TwitterPost::updateData($twitter_post['id'], 'favourites');
                 }
+
+                $user_action->details = $tweet['text'];
+                $user_action->save();
             }
 
 

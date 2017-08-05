@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Twitter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Hashtag;
 use App\Models\TwitterHandle;
+use App\Models\UserTwitterAction;
 use Session;
 use Auth;
 use Redirect;
@@ -25,7 +26,7 @@ class HashtagController extends Controller
     {
         $hashtags = Hashtag::getHashtags();
         // return dd($hashtags);
-        return view('hashtag.show', compact('hashtags'));
+        return view('twitter.hashtag.show', compact('hashtags'));
     }
 
     /**
@@ -36,7 +37,7 @@ class HashtagController extends Controller
     public function create()
     {
         $handles = TwitterHandle::getHandles();
-        return view('hashtag.create', compact('handles'));
+        return view('twitter.hashtag.create', compact('handles'));
 
     }
 
@@ -81,7 +82,37 @@ class HashtagController extends Controller
      */
     public function show($id)
     {
-        //
+        $input = Input::all();
+        $filter = [];
+
+        $hashtag = Hashtag::getHashtags($id);
+
+        if (is_null($hashtag)) {
+            Session::flash('message', 'Ooops!! Hashtag is not found');
+            Session::flash('alert-class', 'alert-danger');
+            return Redirect::back();
+        }
+
+        if (isset($input['end_date'])) {
+            $input['end_date'] = implode("-", explode("/", $input['end_date']));
+            $filter['end_date'] = date("Y-m-d", strtotime($input['end_date']));
+        }
+
+        if (isset($input['start_date'])) {
+            $input['start_date'] = implode("-", explode("/", $input['start_date']));
+            $filter['start_date'] = date("Y-m-d", strtotime($input['start_date']));
+        }
+
+        if (isset($input['start_date']) && isset($input['end_date']) && strtotime($input['end_date']) < strtotime($input['start_date'])) {
+            Session::flash('message', 'Ooops!! Invalid Date-Time Range selected');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+
+        $users = UserTwitterAction::getHastagActivity($id, $filter);
+        $hashtag->count = $users->total();
+
+        return view('twitter.hashtag.activity', compact('hashtag', 'users'));
     }
 
     /**
@@ -101,7 +132,7 @@ class HashtagController extends Controller
         }
         $handles = TwitterHandle::getHandles();
 
-        return view('hashtag.edit', compact('hashtag', 'handles'));
+        return view('twitter.hashtag.edit', compact('hashtag', 'handles'));
     }
 
     /**

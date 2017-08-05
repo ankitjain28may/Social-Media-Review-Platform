@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Facebook;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,7 +31,7 @@ class PostController extends Controller
         }
 
         $posts = Post::where('page_id', $page_id)->where('flag', 1)->paginate($limit);
-        return view('posts.show', compact('posts'));
+        return view('facebook.posts.show', compact('posts'));
 
     }
 

@@ -122,16 +122,4 @@
     <!-- /.col-lg-12 -->
   </div>
 </div>
-
-<div class="panel-body">                            
-  <!-- Modal -->
-  <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-</div>
 @endsection

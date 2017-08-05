@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Twitter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -72,13 +72,19 @@ class HandleController extends Controller
         if (Input::has('handle_name')) {
 
             if ($user_type) {
-                TwitterHandle::firstOrCreate([
+                $user = TwitterHandle::firstOrCreate([
                     'handle' => Input::get('handle_name')
                 ]);
             } else {
-                TwitterUsersHandle::firstOrCreate([
+                $user = TwitterUsersHandle::firstOrCreate([
                     'handle' => Input::get('handle_name')
                 ]);
+            }
+
+            if (!$user->wasRecentlyCreated) {
+                $user->flag = 1;
+                $user->last_crawl = NULL;
+                $user->save();
             }
 
         } elseif(Input::hasFile('import_file')){

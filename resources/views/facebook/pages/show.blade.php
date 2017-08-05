@@ -57,11 +57,11 @@
               </div>
               <div class="row">
                 <div class="col-sm-4">
-                  <!-- <div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">Showing </div> -->
+                  <div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">Showing {{ $pages->firstItem() }} to {{ $pages->lastItem() }} of {{ $pages->total() }} entries </div>
                 </div>
                 <div class="col-sm-8">
                   <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
-                    
+                    {{ $pages->links() }}
                   </div>
                 </div>
               </div>
