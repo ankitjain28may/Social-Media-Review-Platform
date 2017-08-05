@@ -16,7 +16,8 @@
                                             </li>
                                             @if(Auth::check())
                                                 @if(App\User::getSlug(Auth::id())[0]->slug == "admin")
-                                                <li><a href="{{ route('register') }}"> <i class="fa fa-edit fa-fw"></i> Register New Page Admin</a></li>
+                                                <li><a href="{{ route('register') }}"> <i class="fa fa-edit fa-fw"></i> Register New Page Admin</a>
+                                                </li>
 
                                                 <li>
                                                     <a href="{{ url('/pages') }}"><i class="fa fa-files-o fa-fw"></i> My Pages</a>
@@ -36,6 +37,20 @@
                                                             <li>
                                                         </ul>
                                                 </li>
+
+                                                <li>
+                                                    <a href="#"><i class="fa fa-users fa-fw"></i> Fb Users</a>
+                                                        <ul class="nav nav-second-level">
+                                                            <li>
+                                                                <a href="{{ url('/users/1') }}"><i class="glyphicon glyphicon-user fa-fw"></i>Admins</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="{{ url('/users/2') }}"><i class="fa fa-user fa-fw"></i>Users</a>
+                                                            </li>
+                                                            <li>
+                                                        </ul>
+                                                </li>
+
                                                 <li>
                                                     <a href="{{ url('/login/1/facebook') }}">
                                                         <i class="fa fa-facebook fa-fw"></i> Link Facebook
