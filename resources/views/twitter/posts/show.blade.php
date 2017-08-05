@@ -41,7 +41,7 @@
                         @foreach($posts as $index => $post)
                           <tr class="gradeA odd" role="row">
                             <td class="sorting_1">
-                              <a href="{{ url('posts/'.$post['id'].'/activity') }}">
+                              <a href="{{ url('twitter-posts/'.$post['id'].'/activity') }}">
                                 {{ $post['twitter_id'] }}
                               </a>
                             </td>
@@ -55,12 +55,12 @@
                               {{ $post['hashtags'] }}
                             </td>
                             <td class="center">
-                              <a href="{{ url('posts/'.$post['id'].'/activity?action=like') }}">
+                              <a href="{{ url('twitter-posts/'.$post['id'].'/activity?action=favourite') }}">
                                 {{ $post['internal_favourites']."/".$post['favourites'] }}
                               </a>
                             </td>
-                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=comment') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
-                            <td class="center"><a href="{{ url('posts/'.$post['id'].'/activity?action=share') }}">{{ $post['internal_retweets']."/".$post['retweets'] }}</a></td>
+                            <td class="center"><a href="{{ url('twitter-posts/'.$post['id'].'/activity?action=comment') }}">{{ $post['internal_comments']."/".$post['comments'] }}</a></td>
+                            <td class="center"><a href="{{ url('twitter-posts/'.$post['id'].'/activity?action=retweet') }}">{{ $post['internal_retweets']."/".$post['retweets'] }}</a></td>
                             <td class="center">{{ date("d M Y h:i:s A" , strtotime($post['created_time'])) }}</td>
                             <td class="center"><a href="{{ $post['link'] }}" target="_blank"><i class="fa fa-globe fa-fw"></i></a></td>
                           </tr>

@@ -30,14 +30,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function() {
 	Route::resource('/pages', 'PageController');
 	Route::resource('/pages.posts', 'PostController');
-	Route::resource('/posts.activity', 'ActivityController');
-	Route::resource('/twitter-posts', 'TwitterHandleActivityController');
+	Route::resource('/facebook-posts.activity', 'ActivityController');
+	// Route::resource('/twitter-posts.activity', 'ActivityController');
 	Route::resource('/handles', 'HandleController');
 	Route::resource('/handles.posts', 'HandlePostController');
-	Route::resource('/handles.activity', 'HandleActivityController');
 	Route::resource('/hashtags', 'HashtagController');
 	Route::get('/handles/{id}/delete', 'HandleController@destroy');
 	Route::get('/hashtags/{id}/delete', 'HashtagController@destroy');
+
+});
+
+Route::group(['namespace' => 'Twitter', 'middleware' => ['auth', 'admin']], function() {
+	Route::resource('/twitter-posts.activity', 'HandleActivityController');
+	Route::get('/handles/{handle_id}/activity', 'HandleActivityController@showUserActivity');
+
 
 });
 
