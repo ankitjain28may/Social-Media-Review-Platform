@@ -42,8 +42,8 @@ Route::group(['namespace' => 'Twitter', 'middleware' => ['auth', 'admin']], func
 	Route::resource('/hashtags', 'HashtagController');
 	Route::get('/handles/{id}/delete', 'HandleController@destroy');
 	Route::get('/hashtags/{id}/delete', 'HashtagController@destroy');
-
-
 });
 
-// EAAZApcJGTENsBABE2nF6fsydYvvNZAeqNaLJYNnAhYrqTcQLbHG6xI9I6jS6aGVjaWRpCToHaqEQkVu3jRpr8peJ6ulGgaJ9gCagzYjNQuZCcARYrG1lLZBOqzsQHC19oahaDdrzARZC8mEZBFdTmZCP37lieCrs4fMeSFZBEfgPVQZDZD
+Route::get('{any}', function() {
+	return view('layouts.error');
+})
