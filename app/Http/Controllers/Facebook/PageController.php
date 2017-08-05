@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use App\Models\FbUser;
 use App\Models\Page;
+use App\Models\Post;
 use Session;
 use Auth;
 use Redirect;
@@ -23,7 +24,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $pages = Page::where('user_id', Auth::id())->where('flag', 1)->paginate(25);
+        $pages = Page::where('user_id', Auth::id())->where('flag', 1)->paginate(100);
         return view('facebook.pages.show', compact('pages'));
     }
 
@@ -97,7 +98,15 @@ class PageController extends Controller
      */
     public function show($id)
     {
-        //
+        $page = Page::where('id', $id)->where('flag', 1)->first();
+        if (is_null($page)) {
+            Session::flash('message', 'Ooops!! Invalid Page');
+            Session::flash('alert-class', 'alert-info');
+            return Redirect::back();
+        }
+
+        $posts = Post::where('page_id', $id)->where('flag', 1)->paginate(100);
+        return view('facebook.posts.show', compact('posts'));
     }
 
     /**

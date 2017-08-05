@@ -53,7 +53,7 @@ class Hashtag extends Model
             $query->where('hashtags.id', $id);
             $hashtags = $query->first();
         } else {
-            $hashtags = $query->paginate(25);
+            $hashtags = $query->paginate(100);
             
         }
 

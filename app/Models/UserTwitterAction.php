@@ -55,7 +55,7 @@ class UserTwitterAction extends Model
         $query->leftJoin('hashtags', 'hashtags.id', 'twitter_user_actions.hashtag_id');
         $query->select('twitter_user_actions.id as user_twitter_action_id', 'twitter_user_actions.action', 'twitter_user_actions.details', 'twitter_user_actions.action_perform', 'twitter_user_actions.twitter_post_id as post_id', 'twitter_user_handles.id', 'twitter_user_handles.name', 'twitter_user_handles.handle', 'twitter_handles.id as user_mention_id', 'twitter_handles.name as mention_name', 'twitter_handles.handle as mention_handle', 'hashtags.name as hashtag_name');
         $query->orderBy('action_perform', 'desc');
-        $users = $query->paginate(25);
+        $users = $query->paginate(100);
 
         return $users;
 
@@ -77,7 +77,7 @@ class UserTwitterAction extends Model
         $query->join('twitter_user_handles', 'twitter_user_handles.id', 'twitter_user_actions.twitter_user_id');
         $query->select('twitter_user_actions.id as user_twitter_action_id', 'twitter_user_actions.action', 'twitter_user_actions.details', 'twitter_user_actions.action_perform', 'twitter_user_actions.twitter_post_id as post_id', 'twitter_user_handles.id', 'twitter_user_handles.name', 'twitter_user_handles.handle');
         $query->orderBy('action_perform', 'desc');
-        $users = $query->paginate(25);
+        $users = $query->paginate(100);
 
         return $users;
     }

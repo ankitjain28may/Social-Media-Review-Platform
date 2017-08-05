@@ -11,6 +11,7 @@ use Redirect;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Input;
 use App\Models\TwitterHandle;
+use App\Models\TwitterPost;
 use App\Models\TwitterUsersHandle;
 use Validator;
 
@@ -26,9 +27,9 @@ class HandleController extends Controller
         $type = Input::get('type');
 
         if (isset($type) && $type == 'user') {
-            $handles = TwitterUsersHandle::where('flag', 1)->paginate(25);
+            $handles = TwitterUsersHandle::where('flag', 1)->paginate(100);
         } elseif (isset($type) && $type == 'main') {
-            $handles = TwitterHandle::where('flag', 1)->paginate(25);
+            $handles = TwitterHandle::where('flag', 1)->paginate(100);
         } else {
             Session::flash('message', 'Invalid Call');
             Session::flash('alert-class', 'alert-warning');
@@ -128,7 +129,16 @@ class HandleController extends Controller
      */
     public function show($id)
     {
-        //
+        $handle = TwitterHandle::findById($id);
+        if (is_null($handle)) {
+            Session::flash('message', 'User Handle is not found');
+            Session::flash('alert-class', 'alert-warning');
+            return Redirect::back();
+        }
+
+        $posts = TwitterPost::getPosts($id);
+        // return dd($posts);
+        return view('twitter.posts.show', compact('posts'));
     }
 
     /**

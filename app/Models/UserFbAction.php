@@ -28,10 +28,14 @@ class UserFbAction extends Model
     ];
 
 
-    public static function getActivity($post_id, $filter = [])
+    public static function getActivity($post_id = null, $filter = [])
     {
         $query = DB::table('user_fb_actions');
-        $query->where('post_id', $post_id);
+
+        if (!is_null($post_id)) {
+            $query->where('post_id', $post_id);
+        }
+
         if (isset($filter['activity'])) {
             $query->where('action', $filter['activity']);
         }
@@ -52,7 +56,7 @@ class UserFbAction extends Model
         $query->join('users', 'users.id', 'user_fb_actions.user_id');
         $query->select('user_fb_actions.id as user_fb_action_id', 'user_fb_actions.action', 'user_fb_actions.details', 'user_fb_actions.action_perform', 'user_fb_actions.post_id', 'users.id', 'users.name', 'users.email', 'users.avatar');
         $query->orderBy('action_perform', 'desc');
-        $users = $query->paginate(25);
+        $users = $query->paginate(100);
 
         return $users;
 

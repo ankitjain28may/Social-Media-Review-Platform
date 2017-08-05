@@ -23,4 +23,14 @@ class Group extends Model
      */
     protected $hidden = [
     ];
+
+
+    public static function getGroups()
+    {
+        $query = Self::where('flag', 1);
+
+        $groups = $query->get();
+
+        return $groups;
+    }
 }

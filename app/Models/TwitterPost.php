@@ -37,7 +37,7 @@ class TwitterPost extends Model
         $query = Self::where('twitter_handle_id', $handle_id);
         $query->where('flag', 1);
 
-        $posts = $query->paginate(25);
+        $posts = $query->paginate(100);
 
         return $posts;
     }

@@ -266,10 +266,10 @@
     <div class="cloud x5"></div>
   </div>
   <div class='c'>
-    <div class='_404'>Oops</div>
+    <div class='_404'>ERROR</div>
     <hr>
-    <div class='_1'>ERROR HAS OCCURED</div>
-    <div class='_2'>Check the logs</div>
+    <div class='_1'>Has Occured</div>
+    <div class='_2'>Check The Logs</div>
     <a class='btn' href="{{ url('/') }}">BACK TO MARS</a>
   </div>
 </body>
