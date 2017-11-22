@@ -1,5 +1,7 @@
 # Social-Media-Review-Platform
 
+[![Join the chat at https://gitter.im/ankitjain28may/Social-Media-Review-Platform](https://badges.gitter.im/ankitjain28may/Social-Media-Review-Platform.svg)](https://gitter.im/ankitjain28may/Social-Media-Review-Platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 It is a platform to keep an eye on all the posts shared, liked and commented by the people hired by you for marketing.
 
 # Installation and Contribution
